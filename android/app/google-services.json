@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "479677835111",
+    "project_id": "autonomous-chef-dev",
+    "storage_bucket": "autonomous-chef-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479677835111:android:5fe9e3a739867ff255f1c2",
+        "android_client_info": {
+          "package_name": "com.example.autonomous_chef"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "479677835111-8sfaq34vk8rv48u47b04r9f407393rei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS2cTS-yvtZETFewVH96amzbIGGp6XckE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "479677835111-8sfaq34vk8rv48u47b04r9f407393rei.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

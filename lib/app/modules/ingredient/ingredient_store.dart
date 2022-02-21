@@ -2,9 +2,9 @@ import 'package:autonomous_chef/app/core/ingredient/domain/entities/ingredient_m
 import 'package:autonomous_chef/app/core/ingredient/domain/services/firebase_firestore_interface.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
-class HomeStore extends NotifierStore<Exception, int> {
-  final IFireBaseFirestore fireStoreRepository;
-  HomeStore(this.fireStoreRepository) : super(0);
+class IngredientStore extends NotifierStore<Exception, int> {
+final IFireBaseFirestore fireStoreRepository;
+  IngredientStore(this.fireStoreRepository) : super(0);
 
   Stream<List<Ingredient>> listIngredient(
       {String collectionName = "ingredients"}) {
