@@ -1,10 +1,11 @@
 import 'package:autonomous_chef/app/core/ingredient/domain/entities/ingredient_model.dart';
+import 'package:autonomous_chef/app/firestore/model/firestore_document_model.dart';
 import 'package:autonomous_chef/app/firestore/services/firebase_firestore_interface.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
-class HomeStore extends NotifierStore<Exception, int> {
+class IngredientStore extends NotifierStore<Exception, int> {
   final IFireBaseFirestore fireStoreRepository;
-  HomeStore(this.fireStoreRepository) : super(0);
+  IngredientStore(this.fireStoreRepository) : super(0);
 
   Stream<List<Ingredient>> listIngredient(
       {String collectionName = "ingredients"}) {
@@ -49,5 +50,31 @@ class HomeStore extends NotifierStore<Exception, int> {
     }
 
     setLoading(false);
+  }
+
+  Future<void> incrementIngredient({
+    required String collectionName,
+    required FirestoreDocument objectToUpdate,
+    required int amount,
+  }) async {
+    final incrementData = {"amount": amount};
+    fireStoreRepository.updateDocument(
+      collectionName: collectionName,
+      objectToUpdate: objectToUpdate,
+      newData: incrementData,
+    );
+  }
+
+  Future<void> decrementIngredient({
+    required String collectionName,
+    required FirestoreDocument objectToUpdate,
+    required int amount,
+  }) async {
+    final incrementData = {"amount": amount};
+    fireStoreRepository.updateDocument(
+      collectionName: collectionName,
+      objectToUpdate: objectToUpdate,
+      newData: incrementData,
+    );
   }
 }
