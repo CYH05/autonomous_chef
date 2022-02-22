@@ -1,6 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import '../../core/ingredient/domain/services/firebase_firestore_interface.dart';
-import '../../core/ingredient/infra/services/firebase_firestore_impl.dart';
+import '../../firestore/services/firebase_firestore_interface.dart';
+import '../../firestore/services/firebase_firestore_impl.dart';
 import '../home/home_store.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

@@ -1,5 +1,5 @@
 import 'package:autonomous_chef/app/core/ingredient/domain/entities/ingredient_model.dart';
-import 'package:autonomous_chef/app/core/ingredient/domain/services/firebase_firestore_interface.dart';
+import 'package:autonomous_chef/app/firestore/services/firebase_firestore_interface.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
 class HomeStore extends NotifierStore<Exception, int> {
@@ -31,8 +31,13 @@ class HomeStore extends NotifierStore<Exception, int> {
   }) async {
     setLoading(true);
     try {
-      Ingredient ingredient =
-          Ingredient(name, description, amount, unitMeasurement, price);
+      Ingredient ingredient = Ingredient(
+        name: name,
+        description: description,
+        amount: amount,
+        unitMeasurement: unitMeasurement,
+        price: price,
+      );
       fireStoreRepository.insertInCollection(
         collectionName: collectionName,
         objectToInsert: ingredient,

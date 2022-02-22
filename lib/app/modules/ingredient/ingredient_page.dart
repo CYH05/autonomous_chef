@@ -15,7 +15,6 @@ class IngredientPage extends StatefulWidget {
   IngredientPageState createState() => IngredientPageState();
 }
 
-//TODO É errado extender da classe modularState fora da página home?
 class IngredientPageState
     extends ModularState<IngredientPage, IngredientStore> {
   @override
@@ -31,7 +30,7 @@ class IngredientPageState
   final TextEditingController _ingredientPriceController =
       TextEditingController();
 
-  var measure = UnitMeasurement.grama;
+  var measure = UnitMeasurement.g;
 
   @override
   void initState() {
@@ -75,6 +74,46 @@ class IngredientPageState
                         Text("Amount: ${ingredient.amount.toString()}"),
                       ],
                     ),
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text(ingredient.name),
+                            content: Text(
+                                "Em estoque: ${ingredient.amount} ${UnitMeasurement.values[ingredient.unitMeasurement].name}"),
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text("Cancelar"),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  store.decrementIngredient(
+                                    collectionName: "ingredients",
+                                    objectToUpdate: ingredient,
+                                    amount: 50 - ingredient.amount,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("Reduzir"),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  store.incrementIngredient(
+                                    collectionName: "ingredients",
+                                    objectToUpdate: ingredient,
+                                    amount: 50 + ingredient.amount,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("Aumentar"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
                   );
                 },
               );

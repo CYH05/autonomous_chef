@@ -1,7 +1,6 @@
 import 'package:autonomous_chef/app/modules/ingredient/ingredient_Page.dart';
-import 'package:autonomous_chef/app/core/ingredient/domain/services/firebase_firestore_interface.dart';
-import 'package:autonomous_chef/app/core/ingredient/infra/services/firebase_firestore_impl.dart';
-import 'package:autonomous_chef/app/modules/ingredient/ingredient_Page.dart';
+import 'package:autonomous_chef/app/firestore/services/firebase_firestore_interface.dart';
+import 'package:autonomous_chef/app/firestore/services/firebase_firestore_impl.dart';
 import 'package:autonomous_chef/app/modules/ingredient/ingredient_store.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -18,6 +17,7 @@ class IngredientModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/', child: (_, args) => const IngredientPage()),
+    ChildRoute('/',
+        child: (_, args) => const IngredientPage(title: "IngredientPage")),
   ];
 }

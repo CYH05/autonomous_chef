@@ -1,7 +1,7 @@
 enum UnitMeasurement {
-  unidade,
-  grama,
-  quilograma,
-  mililitro,
-  litro,
+  und,
+  g,
+  kg,
+  ml,
+  l,
 }

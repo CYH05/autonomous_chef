@@ -1,25 +1,37 @@
+import 'package:autonomous_chef/app/firestore/model/firestore_document_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Ingredient {
+class Ingredient implements FirestoreDocument {
   final String name;
   final String description;
   final int amount;
   final int unitMeasurement;
   final double price;
 
-  Ingredient(this.name, this.description, this.amount, this.unitMeasurement,
-      this.price);
+  @override
+  String documentReference;
+
+  Ingredient({
+    required this.name,
+    required this.description,
+    required this.amount,
+    required this.unitMeasurement,
+    required this.price,
+    this.documentReference = "",
+  });
 
   factory Ingredient.fromDocument(QueryDocumentSnapshot document) {
     return Ingredient(
-      document['name'],
-      document['description'],
-      document['amount'],
-      document['unitMeasurement'],
-      document['price'],
+      name: document['name'],
+      description: document['description'],
+      amount: document['amount'],
+      unitMeasurement: document['unitMeasurement'],
+      price: document['price'],
+      documentReference: document.id,
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       "name": name,

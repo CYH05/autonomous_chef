@@ -1,5 +1,6 @@
 import 'package:autonomous_chef/app/core/ingredient/domain/entities/ingredient_model.dart';
-import 'package:autonomous_chef/app/core/ingredient/domain/services/firebase_firestore_interface.dart';
+import 'package:autonomous_chef/app/firestore/model/firestore_document_model.dart';
+import 'package:autonomous_chef/app/firestore/services/firebase_firestore_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseFirestoreImpl implements IFireBaseFirestore {
@@ -25,9 +26,23 @@ class FirebaseFirestoreImpl implements IFireBaseFirestore {
   }
 
   @override
-  Future<void> insertInCollection(
-      {required String collectionName, required objectToInsert}) async {
+  Future<void> insertInCollection({
+    required String collectionName,
+    required objectToInsert,
+  }) async {
     Map<String, dynamic> objectMap = objectToInsert.toJson();
     _firestore.collection(collectionName).add(objectMap);
+  }
+
+  @override
+  Future<void> updateDocument({
+    required String collectionName,
+    required FirestoreDocument objectToUpdate,
+    required Map<String, dynamic> newData,
+  }) async {
+    _firestore
+        .collection(collectionName)
+        .doc(objectToUpdate.documentReference)
+        .update(newData);
   }
 }

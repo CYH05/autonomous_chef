@@ -1,9 +1,10 @@
 import 'package:autonomous_chef/app/core/ingredient/domain/entities/ingredient_model.dart';
-import 'package:autonomous_chef/app/core/ingredient/domain/services/firebase_firestore_interface.dart';
+import 'package:autonomous_chef/app/firestore/model/firestore_document_model.dart';
+import 'package:autonomous_chef/app/firestore/services/firebase_firestore_interface.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
 class IngredientStore extends NotifierStore<Exception, int> {
-final IFireBaseFirestore fireStoreRepository;
+  final IFireBaseFirestore fireStoreRepository;
   IngredientStore(this.fireStoreRepository) : super(0);
 
   Stream<List<Ingredient>> listIngredient(
@@ -31,8 +32,13 @@ final IFireBaseFirestore fireStoreRepository;
   }) async {
     setLoading(true);
     try {
-      Ingredient ingredient =
-          Ingredient(name, description, amount, unitMeasurement, price);
+      Ingredient ingredient = Ingredient(
+        name: name,
+        description: description,
+        amount: amount,
+        unitMeasurement: unitMeasurement,
+        price: price,
+      );
       fireStoreRepository.insertInCollection(
         collectionName: collectionName,
         objectToInsert: ingredient,
@@ -44,5 +50,31 @@ final IFireBaseFirestore fireStoreRepository;
     }
 
     setLoading(false);
+  }
+
+  Future<void> incrementIngredient({
+    required String collectionName,
+    required FirestoreDocument objectToUpdate,
+    required int amount,
+  }) async {
+    final incrementData = {"amount": amount};
+    fireStoreRepository.updateDocument(
+      collectionName: collectionName,
+      objectToUpdate: objectToUpdate,
+      newData: incrementData,
+    );
+  }
+
+  Future<void> decrementIngredient({
+    required String collectionName,
+    required FirestoreDocument objectToUpdate,
+    required int amount,
+  }) async {
+    final incrementData = {"amount": amount};
+    fireStoreRepository.updateDocument(
+      collectionName: collectionName,
+      objectToUpdate: objectToUpdate,
+      newData: incrementData,
+    );
   }
 }
