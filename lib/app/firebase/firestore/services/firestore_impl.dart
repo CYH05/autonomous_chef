@@ -1,9 +1,9 @@
 import 'package:autonomous_chef/app/core/ingredient/domain/entities/ingredient_model.dart';
-import 'package:autonomous_chef/app/firestore/model/firestore_document_model.dart';
-import 'package:autonomous_chef/app/firestore/services/firebase_firestore_interface.dart';
+import 'package:autonomous_chef/app/firebase/firestore/model/document_model.dart';
+import 'package:autonomous_chef/app/firebase/firestore/services/firestore_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirebaseFirestoreImpl implements IFireBaseFirestore {
+class FirebaseFirestoreImpl implements IFirestore {
   late final FirebaseFirestore _firestore;
 
   FirebaseFirestoreImpl(this._firestore);
