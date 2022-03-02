@@ -1,3 +1,3 @@
 abstract class ILogout {
-  logout();
+  bool logout();
 }

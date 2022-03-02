@@ -8,11 +8,12 @@ class LogoutImpl implements ILogout {
   LogoutImpl(this._firebaseAuth);
 
   @override
-  logout() {
+  bool logout() {
     try {
       _firebaseAuth.signOut();
+      return true;
     } catch (e) {
-      return "Falha ao se desconectar";
+      return false;
     }
   }
 }
