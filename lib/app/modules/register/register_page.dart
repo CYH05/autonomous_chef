@@ -39,13 +39,13 @@ class RegisterPageState extends ModularState<RegisterPage, RegisterStore> {
                 ElevatedButton(
                     onPressed: () async {
                       var response = await store.register();
-                      if (response.containsKey('error')) {
+                      if (!response) {
                         showDialog(
                             context: context,
                             builder: (context) {
                               return AlertDialog(
                                 title: const Text("Erro"),
-                                content: Text(response['error']),
+                                content: Text(store.errorMessage),
                                 actions: [
                                   ElevatedButton(
                                       onPressed: () => Navigator.pop(context),
