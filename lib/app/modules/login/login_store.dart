@@ -1,4 +1,3 @@
-import 'package:autonomous_chef/app/firebase/auth/models/user_model.dart';
 import 'package:autonomous_chef/app/firebase/auth/services/authentication_interface.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +26,7 @@ class LoginStore extends NotifierStore<Exception, int> {
 
   validateLogin(Map<String, dynamic> auth, modularNavigator) {
     if (auth['isAuthenticated']) {
-      modularNavigator.to.pushNamed("/home/", arguments: User(auth["UID"]));
+      modularNavigator.to.pushNamed("/home/");
     }
   }
 }

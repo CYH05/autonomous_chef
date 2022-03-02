@@ -21,15 +21,4 @@ class AuthenticationImpl extends IAuthentication {
     return authResponse;
   }
 
-  @override
-  Future<void> logout() {
-    // TODO: implement logout
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> register() {
-    // TODO: implement register
-    throw UnimplementedError();
-  }
 }
