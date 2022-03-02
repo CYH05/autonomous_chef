@@ -1,4 +1,4 @@
-import 'package:autonomous_chef/app/firestore/model/firestore_document_model.dart';
+import 'package:autonomous_chef/app/firebase/firestore/model/document_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Ingredient implements FirestoreDocument {

@@ -1,10 +1,10 @@
 import 'package:autonomous_chef/app/core/ingredient/domain/entities/ingredient_model.dart';
-import 'package:autonomous_chef/app/firestore/model/firestore_document_model.dart';
-import 'package:autonomous_chef/app/firestore/services/firebase_firestore_interface.dart';
+import 'package:autonomous_chef/app/firebase/firestore/model/document_model.dart';
+import 'package:autonomous_chef/app/firebase/firestore/services/firestore_interface.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
 class IngredientStore extends NotifierStore<Exception, int> {
-  final IFireBaseFirestore fireStoreRepository;
+  final IFirestore fireStoreRepository;
   IngredientStore(this.fireStoreRepository) : super(0);
 
   Stream<List<Ingredient>> listIngredient(
