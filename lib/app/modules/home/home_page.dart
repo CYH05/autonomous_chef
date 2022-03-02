@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'home_store.dart';
@@ -26,8 +25,23 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
           ),
           ElevatedButton(
             onPressed: () {
-              FirebaseAuth.instance.signOut();
-              Modular.to.navigate('/');
+              if (store.logout()) {
+                Modular.to.navigate('/');
+              } else {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text("Erro"),
+                        content: Text(store.errorMessage),
+                        actions: [
+                          ElevatedButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text("Ok"))
+                        ],
+                      );
+                    });
+              }
             },
             child: const Text("Logout"),
           ),

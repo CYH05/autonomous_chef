@@ -15,11 +15,11 @@ class RegisterImpl implements IRegister {
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        return {'error': 'The password provided is too weak.'};
+        return 'The password provided is too weak.';
       } else if (e.code == 'email-already-in-use') {
-        return {'error': 'The account already exists for that email.'};
+        return 'The account already exists for that email.';
       }
     }
-    return {'success': true};
+    return true;
   }
 }
