@@ -1,22 +1,16 @@
-import 'package:autonomous_chef/app/firebase/auth/services/logout_interface.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../../firebase/auth/services/logout_impl.dart';
-import '../home/home_store.dart';
+import '../home/home_store.dart'; 
 
 import 'home_page.dart';
-
+ 
 class HomeModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind.lazySingleton(
-      (i) => HomeStore(i.get<ILogout>()),
-    ),
-    Bind<ILogout>((i) => LogoutImpl(FirebaseAuth.instance)),
-  ];
+ Bind.lazySingleton((i) => HomeStore()),
+ ];
 
-  @override
-  final List<ModularRoute> routes = [
-    ChildRoute("/", child: (_, args) => const HomePage()),
-  ];
+ @override
+ final List<ModularRoute> routes = [
+   ChildRoute(Modular.initialRoute, child: (_, args) => HomePage()),
+ ];
 }

@@ -1,20 +1,20 @@
 import 'package:flutter_triple/flutter_triple.dart';
 
-import '../../firebase/auth/services/logout_interface.dart';
-
 class HomeStore extends NotifierStore<Exception, int> {
-  final ILogout _logoutInterface;
-  String errorMessage = "";
+  HomeStore() : super(0);
 
-  HomeStore(this._logoutInterface) : super(0);
+  Future<void> increment() async {
+    setLoading(true);
 
-  bool logout() {
-    var response = _logoutInterface.logout();
-    if (!response) {
-      errorMessage =
-          "Something goes wrong and we cannot logout you, wait few minutes and try again.";
-      return false;
+    await Future.delayed(Duration(seconds: 1));
+
+    int value = state + 1;
+    if (value < 5) {
+      update(value);
+    } else {
+      setError(Exception('Error: state not can be > 4'));
     }
-    return true;
+
+    setLoading(false);
   }
 }
