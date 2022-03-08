@@ -49,6 +49,8 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
+        minSdkVersion 19
     }
 
     buildTypes {
@@ -56,6 +58,21 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+        }
+    }
+
+    flavorDimensions "flavors"
+    
+    productFlavors {
+        dev {
+            dimension "flavors"
+            resValue "string", "app_name", "[dev] Autonomous chef"
+            applicationId "com.example.autonomous_chef.dev"
+        }
+        prod {
+            resValue "string", "app_name", "Autonomous chef"
+            dimension "flavors"
+            applicationId "com.example.autonomous_chef"
         }
     }
 }
@@ -68,10 +85,4 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation platform('com.google.firebase:firebase-bom:29.0.4')
     implementation 'com.google.firebase:firebase-analytics'
-}
-
-android{
-    defaultConfig{
-        minSdkVersion 19
-    }
 }
