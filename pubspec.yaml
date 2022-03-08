@@ -41,6 +41,7 @@ dependencies:
   mocktail: ^0.3.0
   fpdart: ^0.0.14
   equatable: ^2.0.3
+  flutter_flavor: ^3.0.3
 
 dev_dependencies:
   flutter_test:
