@@ -1,6 +1,7 @@
-class RegisterEmailPassword {
+class RegisterEmailPasswordEntity {
   final String email;
   final String password;
 
-  RegisterEmailPassword(this.email, this.password);
+  const RegisterEmailPasswordEntity(
+      {required this.email, required this.password});
 }

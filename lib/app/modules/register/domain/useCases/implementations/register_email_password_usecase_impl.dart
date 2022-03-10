@@ -12,17 +12,25 @@ class RegisterEmailPasswordUsecaseImpl
 
   RegisterEmailPasswordUsecaseImpl(this._repository);
   @override
-  Future<Either<InvalidKeysException, RegisterEmailPassword>> call(
-      RegisterEmailPassword registerEntity) async {
+  Future<Either<RegisterException, RegisterEmailPasswordEntity>> call(
+    RegisterEmailPasswordEntity registerEntity,
+  ) async {
     if (!validateEmail(registerEntity.email)) {
       return Left(
-          InvalidKeysException("Preencha com um endereço de e-mail válido."));
+        EmailAddressInvalidException(
+          message: "Preencha com um endereço de e-mail válido.",
+        ),
+      );
     }
     if (!validatePassword(registerEntity.password)) {
-      return Left(InvalidKeysException(
-          "Sua senha deve conter ao menos:\n8 caracteres;\n1 caractere minusculo;\n1 caractere maisculo;\n1 múmero;\n1 caractere especial."));
+      return Left(
+        PasswordInvalidException(
+          message:
+              "Sua senha deve conter ao menos:\n8 caracteres;\n1 caractere minusculo;\n1 caractere maisculo;\n1 múmero;\n1 caractere especial.",
+        ),
+      );
     }
 
-    throw UnimplementedError();
+    return _repository.registerWithEmailPassword(registerEntity);
   }
 }

@@ -1,9 +1,15 @@
-class RegisterException implements Exception {
-  final String message;
+import 'package:autonomous_chef/app/core/helpers/app_exceptions.dart';
 
-  RegisterException(this.message);
+class RegisterException extends AppError {
+  RegisterException({required String message}) : super(message: message);
 }
 
-class InvalidKeysException extends RegisterException {
-  InvalidKeysException(String message) : super(message);
+class EmailAddressInvalidException extends RegisterException {
+  EmailAddressInvalidException({
+    required String message,
+  }) : super(message: message);
+}
+
+class PasswordInvalidException extends RegisterException {
+  PasswordInvalidException({required String message}) : super(message: message);
 }

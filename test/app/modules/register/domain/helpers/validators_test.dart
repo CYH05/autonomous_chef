@@ -2,59 +2,76 @@ import 'package:autonomous_chef/app/modules/register/domain/helpers/validators.d
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group("Testing validation to email and password - success", () {
-    testWidgets('Email validation', (tester) async {
+  test(
+    'validateEmail, should return true when email is valid.',
+    () {
       const String email = "teste@teste.teste";
       expect(validateEmail(email), true);
-    });
-    testWidgets('Password validation', (tester) async {
+    },
+  );
+  test(
+    'validatePassword, should return true when email is valid.',
+    () {
       const String password = "Teste@123";
       expect(validatePassword(password), true);
-    });
-  });
-  group("Email validation failures", () {
-    testWidgets('Email validation with blank email - failure', (tester) async {
+    },
+  );
+  test(
+    'validateEmail, should return false when email is blank.',
+    () {
       const String email = "";
       expect(validateEmail(email), false);
-    });
+    },
+  );
 
-    testWidgets('Email validation with invalid email (without at(@))- failure',
-        (tester) async {
+  test(
+    "validateEmail, should return false when email don't have at(@).",
+    () {
       const String email = "testeteste.teste";
       expect(validateEmail(email), false);
-    });
-  });
+    },
+  );
 
-  group("password validation failures", () {
-    testWidgets('Password validation with blank password - failure',
-        (tester) async {
+  test(
+    'validatePassword, should return false when password is blank.',
+    () {
       const String password = "";
       expect(validatePassword(password), false);
-    });
-    testWidgets('Password validation with insufficient characters - failure',
-        (tester) async {
+    },
+  );
+  test(
+    "validatePassword, should return false when password don't reach mininal lenght.",
+    () {
       const String password = "Teste@1";
       expect(validatePassword(password), false);
-    });
-    testWidgets('Password validation without uppercase charater - failure',
-        (tester) async {
+    },
+  );
+  test(
+    "validatePassword, should return false when password don't have at least one uppercase character.",
+    () {
       const String password = "teste@123";
       expect(validatePassword(password), false);
-    });
-    testWidgets('Password validation without lowercase charater - failure',
-        (tester) async {
+    },
+  );
+  test(
+    "validatePassword, should return false when password don't have at least one lowercase character.",
+    () {
       const String password = "TESTE@123";
       expect(validatePassword(password), false);
-    });
-    testWidgets('Password validation without special charater - failure',
-        (tester) async {
+    },
+  );
+  test(
+    "validatePassword, should return false when password don't have at least one special character.",
+    () {
       const String password = "TESTE123";
       expect(validatePassword(password), false);
-    });
-    testWidgets('Password validation without digit charater - failure',
-        (tester) async {
+    },
+  );
+  test(
+    "validatePassword, should return false when password don't have at least one digit character.",
+    () {
       const String password = "TESTE@!@#";
       expect(validatePassword(password), false);
-    });
-  });
+    },
+  );
 }
