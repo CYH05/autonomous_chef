@@ -1,5 +1,5 @@
 import 'package:autonomous_chef/app/modules/register/domain/entity/register_email_password_entity.dart';
-import 'package:autonomous_chef/app/modules/register/domain/helpers/exceptions.dart';
+import 'package:autonomous_chef/app/modules/register/domain/helpers/erros.dart';
 import 'package:autonomous_chef/app/modules/register/domain/repository/register_email_password_repository_interface.dart';
 import 'package:autonomous_chef/app/modules/register/domain/useCases/implementations/register_email_password_usecase_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -31,10 +31,9 @@ void main() {
 
       /*
       De forma abreviada
-      testUseCase.fold((l) => l, (r) => r); */
-
-      /* 
+      testUseCase.fold((l) => l, (r) => r); 
       Gera o mesmo resultado do expect abaixo
+      
       final result = response.fold(id, id);
       expect(result, isA<RegisterEmailPasswordEntity>()); */
       expect(response.isRight(), equals(true));
@@ -53,8 +52,7 @@ void main() {
 
       final result = response.fold(id, id);
 
-      expect(result, isA<EmailAddressInvalidException>());
-      expect(response.isLeft(), equals(true));
+      expect(result, isA<EmailValidationError>());
     },
   );
 
@@ -70,8 +68,7 @@ void main() {
 
       final result = response.fold(id, id);
 
-      expect(result, isA<PasswordInvalidException>());
-      expect(response.isLeft(), equals(true));
+      expect(result, isA<PasswordValidationError>());
     },
   );
 }

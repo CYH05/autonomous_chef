@@ -1,15 +1,22 @@
 import 'package:autonomous_chef/app/core/helpers/app_exceptions.dart';
 
-class RegisterException extends AppError {
-  RegisterException({required String message}) : super(message: message);
-}
-
-class EmailAddressInvalidException extends RegisterException {
-  EmailAddressInvalidException({
+class RegisterException extends AppException {
+  RegisterException({
     required String message,
-  }) : super(message: message);
+    required StackTrace stackTrace,
+  }) : super(message: message, stackTrace: stackTrace);
 }
 
-class PasswordInvalidException extends RegisterException {
-  PasswordInvalidException({required String message}) : super(message: message);
+class EmailAlreadyInUseException extends RegisterException {
+  EmailAlreadyInUseException({
+    required String message,
+    required StackTrace stackTrace,
+  }) : super(message: message, stackTrace: stackTrace);
+}
+
+class FirebaseAuthCouldNotRegisterException extends RegisterException {
+  FirebaseAuthCouldNotRegisterException({
+    required String message,
+    required StackTrace stackTrace,
+  }) : super(message: message, stackTrace: stackTrace);
 }

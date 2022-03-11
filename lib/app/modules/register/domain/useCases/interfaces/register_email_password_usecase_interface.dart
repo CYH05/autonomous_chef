@@ -1,8 +1,9 @@
+import '../../../../../core/helpers/app_exceptions.dart';
 import '../../entity/register_email_password_entity.dart';
-import '../../helpers/exceptions.dart';
 import 'package:fpdart/fpdart.dart';
 
 abstract class IRegisterEmailPasswordUsecase {
-  Future<Either<RegisterException, RegisterEmailPasswordEntity>> call(
-      RegisterEmailPasswordEntity registerEntity);
+  Future<Either<IAppExceptions, RegisterEmailPasswordEntity>> call(
+    RegisterEmailPasswordEntity registerEntity,
+  );
 }
