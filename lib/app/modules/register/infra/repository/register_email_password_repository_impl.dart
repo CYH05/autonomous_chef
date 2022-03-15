@@ -33,11 +33,25 @@ class RegisterEmailPasswordRepositoryImpl
           stackTrace: exception,
         ),
       );
-    } on FirebaseAuthCouldNotRegisterException catch (_, exception) {
+    } on EmailOrPasswordEnabledException catch (_, exception) {
       return Left(
-        FirebaseAuthCouldNotRegisterException(
-          //TODO trocar a mensagem
-          message: "Houve uma falha no serviço externo(firebase)",
+        EmailOrPasswordEnabledException(
+          message:
+              "Email ou senha estão desabilitados, habilite a opção no console do firebase.",
+          stackTrace: exception,
+        ),
+      );
+    } on InvalidEmailException catch (_, exception) {
+      return Left(
+        InvalidEmailException(
+          message: "Endereço de email inválida.",
+          stackTrace: exception,
+        ),
+      );
+    } on WeekPasswordException catch (_, exception) {
+      return Left(
+        WeekPasswordException(
+          message: "A senha é considerada muito fraca.",
           stackTrace: exception,
         ),
       );

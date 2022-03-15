@@ -1,6 +1,5 @@
 import 'package:autonomous_chef/app/modules/register/domain/helpers/exceptions.dart';
 import 'package:autonomous_chef/app/modules/register/external/datasource/register_email_password_datasource_impl.dart';
-import 'package:autonomous_chef/app/modules/register/external/responses.dart';
 import 'package:autonomous_chef/app/modules/register/external/services/firebase_auth_service_interface.dart';
 import 'package:autonomous_chef/app/modules/register/domain/entity/register_email_password_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,7 +11,7 @@ void main() {
   late final MockService _service;
   late final RegisterEmailPasswordDatasourceImpl _datasource;
 
-  setUp(() {
+  setUpAll(() {
     _service = MockService();
     _datasource = RegisterEmailPasswordDatasourceImpl(_service);
   });
@@ -25,12 +24,10 @@ void main() {
       };
 
       when(() => _service.registerFirebaseAuth(registerEmailPasswordMap))
-          .thenAnswer(
-        (_) async => SuccessResponse(
-          message: "Work as espected",
-          status: true,
-        ),
-      );
+          .thenAnswer((_) async => const RegisterEmailPasswordEntity(
+                email: "teste@teste.teste",
+                password: "Teste@123",
+              ));
 
       final result = await _datasource.registerEmailPassword(
         registerEmailPasswordMap,
@@ -66,5 +63,4 @@ void main() {
       );
     },
   );
-
 }

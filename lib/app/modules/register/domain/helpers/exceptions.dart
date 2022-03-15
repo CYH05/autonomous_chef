@@ -14,8 +14,22 @@ class EmailAlreadyInUseException extends RegisterException {
   }) : super(message: message, stackTrace: stackTrace);
 }
 
-class FirebaseAuthCouldNotRegisterException extends RegisterException {
-  FirebaseAuthCouldNotRegisterException({
+class InvalidEmailException extends RegisterException {
+  InvalidEmailException({
+    required String message,
+    required StackTrace stackTrace,
+  }) : super(message: message, stackTrace: stackTrace);
+}
+
+class EmailOrPasswordEnabledException extends RegisterException {
+  EmailOrPasswordEnabledException({
+    required String message,
+    required StackTrace stackTrace,
+  }) : super(message: message, stackTrace: stackTrace);
+}
+
+class WeekPasswordException extends RegisterException {
+  WeekPasswordException({
     required String message,
     required StackTrace stackTrace,
   }) : super(message: message, stackTrace: stackTrace);

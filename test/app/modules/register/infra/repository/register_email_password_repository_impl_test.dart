@@ -79,13 +79,13 @@ void main() {
         password: 'Teste@123',
       );
       final registerMap = RegisterEmailPasswordMaper(
-        email: "teste@teste.teste",
-        password: "Teste@123",
+        email: registerEntity.email,
+        password: registerEntity.password,
       );
 
       when((() => mockDatasource.registerEmailPassword(registerMap.toMap())))
           .thenAnswer((_) async {
-        throw FirebaseAuthCouldNotRegisterException(
+        throw EmailOrPasswordEnabledException(
           message: "Algo inesperado ocorreu.",
           stackTrace: StackTrace.fromString(
             "Este email já esta sendo utilizado.",
@@ -97,7 +97,66 @@ void main() {
           .registerWithEmailPassword(registerEntity);
 
       final result = response.fold((l) => l, (r) => r);
-      expect(result, isA<FirebaseAuthCouldNotRegisterException>());
+      expect(result, isA<EmailOrPasswordEnabledException>());
+    },
+  );
+  test(
+    'RegisterEmailPasswordRepositoryImpl, should return left when datasource throw InvalidEmailException.',
+    () async {
+      const registerEntity = RegisterEmailPasswordEntity(
+        email: 'testetesteteste',
+        password: 'Teste@123',
+      );
+      final registerMap = RegisterEmailPasswordMaper(
+        email: registerEntity.email,
+        password: registerEntity.password,
+      );
+
+      when((() => mockDatasource.registerEmailPassword(registerMap.toMap())))
+          .thenAnswer((_) async {
+        throw InvalidEmailException(
+          message: "Email inválido.",
+          stackTrace: StackTrace.fromString(
+            "Informe um endereço de email válido.",
+          ),
+        );
+      });
+
+      final response = await registerEmailPasswordRepositoryImpl
+          .registerWithEmailPassword(registerEntity);
+
+      final result = response.fold((l) => l, (r) => r);
+      expect(result, isA<InvalidEmailException>());
+    },
+  );
+
+  test(
+    'RegisterEmailPasswordRepositoryImpl, should return left when datasource throw WeekPasswordException.',
+    () async {
+      const registerEntity = RegisterEmailPasswordEntity(
+        email: 'testetesteteste',
+        password: 'teste',
+      );
+      final registerMap = RegisterEmailPasswordMaper(
+        email: registerEntity.email,
+        password: registerEntity.password,
+      );
+
+      when((() => mockDatasource.registerEmailPassword(registerMap.toMap())))
+          .thenAnswer((_) async {
+        throw WeekPasswordException(
+          message: "Senha fraca.",
+          stackTrace: StackTrace.fromString(
+            "Aumente a complexidade da sua senha.",
+          ),
+        );
+      });
+
+      final response = await registerEmailPasswordRepositoryImpl
+          .registerWithEmailPassword(registerEntity);
+
+      final result = response.fold((l) => l, (r) => r);
+      expect(result, isA<WeekPasswordException>());
     },
   );
 }
