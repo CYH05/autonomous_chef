@@ -16,6 +16,7 @@ class RegisterEmailPasswordUsecaseImpl
   Future<Either<IAppExceptions, RegisterEmailPasswordEntity>> call(
     RegisterEmailPasswordEntity registerEntity,
   ) async {
+    
     if (!validateEmail(registerEntity.email)) {
       return Left(
         EmailValidationError(
