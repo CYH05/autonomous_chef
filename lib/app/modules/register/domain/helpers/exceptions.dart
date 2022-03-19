@@ -1,35 +1,35 @@
 import 'package:autonomous_chef/app/core/helpers/app_exception.dart';
 
 class RegisterException extends AppException {
-  RegisterException({
+  const RegisterException({
     required String message,
     required StackTrace stackTrace,
   }) : super(message: message, stackTrace: stackTrace);
 }
 
 class EmailAlreadyInUseException extends RegisterException {
-  EmailAlreadyInUseException({
+  const EmailAlreadyInUseException({
     required String message,
     required StackTrace stackTrace,
   }) : super(message: message, stackTrace: stackTrace);
 }
 
 class InvalidEmailException extends RegisterException {
-  InvalidEmailException({
+  const InvalidEmailException({
     required String message,
     required StackTrace stackTrace,
   }) : super(message: message, stackTrace: stackTrace);
 }
 
 class EmailOrPasswordEnabledException extends RegisterException {
-  EmailOrPasswordEnabledException({
+  const EmailOrPasswordEnabledException({
     required String message,
     required StackTrace stackTrace,
   }) : super(message: message, stackTrace: stackTrace);
 }
 
 class WeekPasswordException extends RegisterException {
-  WeekPasswordException({
+  const WeekPasswordException({
     required String message,
     required StackTrace stackTrace,
   }) : super(message: message, stackTrace: stackTrace);
