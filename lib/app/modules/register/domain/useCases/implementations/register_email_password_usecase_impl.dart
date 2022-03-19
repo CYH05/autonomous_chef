@@ -11,7 +11,7 @@ class RegisterEmailPasswordUsecaseImpl
     implements IRegisterEmailPasswordUsecase {
   final IRegisterEmailPasswordRepository _repository;
 
-  RegisterEmailPasswordUsecaseImpl(this._repository);
+  const RegisterEmailPasswordUsecaseImpl(this._repository);
   @override
   Future<Either<IAppException, RegisterEmailPasswordEntity>> call(
     RegisterEmailPasswordEntity registerEntity,
