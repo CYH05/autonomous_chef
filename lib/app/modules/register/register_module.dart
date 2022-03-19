@@ -25,7 +25,7 @@ class RegisterModule extends Module {
       ),
     ),
     Bind.singleton(
-      (i) => RegisterEmailPasswordDatasourceImpl(i()),
+      (i) => RegisterEmailPasswordDatasourceImpl(service: i()),
       //TODO construtor nomeado e rpivado
     ),
     Bind.singleton((i) => FirebaseAuthServiceImpl(FirebaseAuth.instance)),

@@ -5,7 +5,9 @@ import 'package:autonomous_chef/app/modules/register/infra/datasource/register_e
 class RegisterEmailPasswordDatasourceImpl
     implements IRegisterEmailPasswordDatasource {
   final IFirebaseAuthService _service;
-  RegisterEmailPasswordDatasourceImpl(this._service);
+  const RegisterEmailPasswordDatasourceImpl(
+      {required IFirebaseAuthService service})
+      : _service = service;
 
   @override
   Future<RegisterEmailPasswordEntity> registerEmailPassword(

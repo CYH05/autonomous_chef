@@ -13,7 +13,7 @@ void main() {
 
   setUpAll(() {
     _service = MockService();
-    _datasource = RegisterEmailPasswordDatasourceImpl(_service);
+    _datasource = RegisterEmailPasswordDatasourceImpl(service: _service);
   });
   test(
     'RegisterEmailPasswordDatasourceImpl, should return RegisterEmailPasswordEntity when service work normally',
