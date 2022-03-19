@@ -1,4 +1,4 @@
-import 'package:autonomous_chef/app/modules/register/domain/helpers/erros.dart';
+import 'package:autonomous_chef/app/modules/register/domain/helpers/errors.dart';
 import 'package:fpdart/fpdart.dart';
 
 import '../../../../../core/helpers/app_exception.dart';
@@ -16,7 +16,6 @@ class RegisterEmailPasswordUsecaseImpl
   Future<Either<IAppException, RegisterEmailPasswordEntity>> call(
     RegisterEmailPasswordEntity registerEntity,
   ) async {
-    
     if (!validateEmail(registerEntity.email)) {
       return Left(
         EmailValidationError(
