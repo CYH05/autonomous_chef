@@ -50,6 +50,7 @@ void main() async {
         ),
       ).thenAnswer(
         (invocation) async =>
+            //TODO usar o Skip() para não detectar no flutter test run e diminuir a taxa de coverage
             throw FirebaseAuthException(code: "email-already-in-use"),
       );
 

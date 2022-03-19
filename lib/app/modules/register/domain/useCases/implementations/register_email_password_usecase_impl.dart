@@ -1,7 +1,7 @@
 import 'package:autonomous_chef/app/modules/register/domain/helpers/erros.dart';
 import 'package:fpdart/fpdart.dart';
 
-import '../../../../../core/helpers/app_exceptions.dart';
+import '../../../../../core/helpers/app_exception.dart';
 import '../../entity/register_email_password_entity.dart';
 import '../../helpers/validators.dart';
 import '../../repository/register_email_password_repository_interface.dart';
@@ -13,7 +13,7 @@ class RegisterEmailPasswordUsecaseImpl
 
   RegisterEmailPasswordUsecaseImpl(this._repository);
   @override
-  Future<Either<IAppExceptions, RegisterEmailPasswordEntity>> call(
+  Future<Either<IAppException, RegisterEmailPasswordEntity>> call(
     RegisterEmailPasswordEntity registerEntity,
   ) async {
     

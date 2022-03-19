@@ -1,15 +1,11 @@
 import 'package:autonomous_chef/app/modules/register/domain/entity/register_email_password_entity.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:fpdart/fpdart.dart';
 
-import '../../core/helpers/app_exceptions.dart';
+import '../../core/helpers/app_exception.dart';
 import 'domain/useCases/interfaces/register_email_password_usecase_interface.dart';
 
-class RegisterStore extends NotifierStore<IAppExceptions, bool> {
-  //TODO confirmar se devo ter um campo da interface ou o objeto implicito
+class RegisterStore extends NotifierStore<IAppException, bool> {
   final IRegisterEmailPasswordUsecase _registerEmailPasswordUsecase;
-
-  //final RegisterEmailPasswordUsecaseImpl _registerEmailPasswordUsecase;
 
   RegisterStore({
     required IRegisterEmailPasswordUsecase registerEmailPasswordUsecase,
@@ -24,7 +20,7 @@ class RegisterStore extends NotifierStore<IAppExceptions, bool> {
     _registerEmailPasswordUsecase = registerEmailPasswordUsecase;
   } */
 
-  Future<Unit> registerEmailPassword({
+  Future<void> registerEmailPassword({
     required String email,
     required String password,
   }) async {
@@ -42,7 +38,5 @@ class RegisterStore extends NotifierStore<IAppExceptions, bool> {
     handledResponse.fold(setError, update);
 
     setLoading(false);
-
-    return unit;
   }
 }

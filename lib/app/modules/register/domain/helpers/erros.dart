@@ -1,4 +1,4 @@
-import 'package:autonomous_chef/app/core/helpers/app_exceptions.dart';
+import 'package:autonomous_chef/app/core/helpers/app_exception.dart';
 
 class RegisterError extends AppError {
   RegisterError({required String message}) : super(message: message);

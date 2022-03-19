@@ -1,9 +1,9 @@
-class IAppExceptions implements Exception {
+class IAppException implements Exception {
   final String message;
-  const IAppExceptions({required this.message});
+  const IAppException({required this.message});
 }
 
-class AppException extends IAppExceptions {
+class AppException extends IAppException {
   final StackTrace stackTrace;
 
   const AppException({
@@ -12,6 +12,6 @@ class AppException extends IAppExceptions {
   }) : super(message: message);
 }
 
-class AppError extends IAppExceptions {
+class AppError extends IAppException {
   const AppError({required String message}) : super(message: message);
 }

@@ -3,7 +3,7 @@ import 'package:autonomous_chef/app/modules/register/domain/helpers/exceptions.d
 import 'package:autonomous_chef/app/modules/register/infra/mapers/register_email_password_entity_mapers.dart';
 import 'package:fpdart/fpdart.dart';
 
-import '../../../../core/helpers/app_exceptions.dart';
+import '../../../../core/helpers/app_exception.dart';
 import '../../domain/repository/register_email_password_repository_interface.dart';
 import '../datasource/register_email_password_datasource_interface.dart';
 
@@ -14,7 +14,7 @@ class RegisterEmailPasswordRepositoryImpl
   RegisterEmailPasswordRepositoryImpl(this._datasource);
 
   @override
-  Future<Either<IAppExceptions, RegisterEmailPasswordEntity>>
+  Future<Either<IAppException, RegisterEmailPasswordEntity>>
       registerWithEmailPassword(
     RegisterEmailPasswordEntity entity,
   ) async {
