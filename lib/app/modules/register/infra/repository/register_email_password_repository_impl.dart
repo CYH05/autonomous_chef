@@ -28,33 +28,33 @@ class RegisterEmailPasswordRepositoryImpl
         RegisterEmailPasswordMapper.toMap(registerMap),
       );
       return Right(registerEmailPasswordMaper);
-    } on EmailAlreadyInUseException catch (_, exception) {
+    } on EmailAlreadyInUseException catch (_, stackTrace) {
       return Left(
         EmailAlreadyInUseException(
           message: "Este email já esta sendo utilizado.",
-          stackTrace: exception,
+          stackTrace: stackTrace,
         ),
       );
-    } on EmailOrPasswordEnabledException catch (_, exception) {
+    } on EmailOrPasswordEnabledException catch (_, stackTrace) {
       return Left(
         EmailOrPasswordEnabledException(
           message:
               "Email ou senha estão desabilitados, habilite a opção no console do firebase.",
-          stackTrace: exception,
+          stackTrace: stackTrace,
         ),
       );
-    } on InvalidEmailException catch (_, exception) {
+    } on InvalidEmailException catch (_, stackTrace) {
       return Left(
         InvalidEmailException(
           message: "Endereço de email inválida.",
-          stackTrace: exception,
+          stackTrace: stackTrace,
         ),
       );
-    } on WeekPasswordException catch (_, exception) {
+    } on WeekPasswordException catch (_, stackTrace) {
       return Left(
         WeekPasswordException(
           message: "A senha é considerada muito fraca.",
-          stackTrace: exception,
+          stackTrace: stackTrace,
         ),
       );
     }
