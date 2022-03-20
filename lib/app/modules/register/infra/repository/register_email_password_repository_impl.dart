@@ -1,11 +1,11 @@
 import 'package:autonomous_chef/app/modules/register/domain/entity/register_email_password_entity.dart';
 import 'package:autonomous_chef/app/modules/register/domain/helpers/exceptions.dart';
-import 'package:autonomous_chef/app/modules/register/infra/mapers/register_email_password_entity_mapers.dart';
 import 'package:fpdart/fpdart.dart';
 
 import '../../../../core/helpers/app_exception.dart';
 import '../../domain/repository/register_email_password_repository_interface.dart';
 import '../datasource/register_email_password_datasource_interface.dart';
+import '../mappers/register_email_password_entity_mapper.dart';
 
 class RegisterEmailPasswordRepositoryImpl
     implements IRegisterEmailPasswordRepository {
@@ -19,12 +19,14 @@ class RegisterEmailPasswordRepositoryImpl
     RegisterEmailPasswordEntity entity,
   ) async {
     try {
-      final registerMap = RegisterEmailPasswordMaper(
+      final registerMap = RegisterEmailPasswordMapper(
         email: entity.email,
         password: entity.password,
       );
       final registerEmailPasswordMaper =
-          await _datasource.registerEmailPassword(registerMap.toMap());
+          await _datasource.registerEmailPassword(
+        RegisterEmailPasswordMapper.toMap(registerMap),
+      );
       return Right(registerEmailPasswordMaper);
     } on EmailAlreadyInUseException catch (_, exception) {
       return Left(

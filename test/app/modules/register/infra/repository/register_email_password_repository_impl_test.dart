@@ -1,7 +1,7 @@
 import 'package:autonomous_chef/app/modules/register/domain/entity/register_email_password_entity.dart';
 import 'package:autonomous_chef/app/modules/register/domain/helpers/exceptions.dart';
 import 'package:autonomous_chef/app/modules/register/infra/datasource/register_email_password_datasource_interface.dart';
-import 'package:autonomous_chef/app/modules/register/infra/mapers/register_email_password_entity_mapers.dart';
+import 'package:autonomous_chef/app/modules/register/infra/mappers/register_email_password_entity_mapper.dart';
 import 'package:autonomous_chef/app/modules/register/infra/repository/register_email_password_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -25,12 +25,12 @@ void main() {
         password: "Teste@123",
       );
 
-      final registerMap = RegisterEmailPasswordMaper(
+      final registerMap = RegisterEmailPasswordMapper(
         email: registerEntity.email,
         password: registerEntity.password,
       );
 
-      when((() => mockDatasource.registerEmailPassword(registerMap.toMap())))
+      when((() => mockDatasource.registerEmailPassword(RegisterEmailPasswordMapper.toMap(registerEntity))))
           .thenAnswer((_) async => registerEntity);
       //TODO
       final response = await registerEmailPasswordRepositoryImpl
@@ -48,12 +48,12 @@ void main() {
         email: "teste@teste.teste",
         password: "Teste@123",
       );
-      final registerMap = RegisterEmailPasswordMaper(
+      final registerMap = RegisterEmailPasswordMapper(
         email: registerEntity.email,
         password: registerEntity.password,
       );
 
-      when((() => mockDatasource.registerEmailPassword(registerMap.toMap())))
+      when((() => mockDatasource.registerEmailPassword(RegisterEmailPasswordMapper.toMap(registerEntity))))
           .thenAnswer((_) async {
         throw EmailAlreadyInUseException(
           message: "Este email já esta sendo utilizado.",
@@ -78,12 +78,12 @@ void main() {
         email: 'teste@teste.teste',
         password: 'Teste@123',
       );
-      final registerMap = RegisterEmailPasswordMaper(
+      final registerMap = RegisterEmailPasswordMapper(
         email: registerEntity.email,
         password: registerEntity.password,
       );
 
-      when((() => mockDatasource.registerEmailPassword(registerMap.toMap())))
+      when((() => mockDatasource.registerEmailPassword(RegisterEmailPasswordMapper.toMap(registerEntity))))
           .thenAnswer((_) async {
         throw EmailOrPasswordEnabledException(
           message: "Algo inesperado ocorreu.",
@@ -107,12 +107,13 @@ void main() {
         email: 'testetesteteste',
         password: 'Teste@123',
       );
-      final registerMap = RegisterEmailPasswordMaper(
+      final registerMap = RegisterEmailPasswordMapper(
         email: registerEntity.email,
         password: registerEntity.password,
       );
 
-      when((() => mockDatasource.registerEmailPassword(registerMap.toMap())))
+      when((() => mockDatasource.registerEmailPassword(
+              RegisterEmailPasswordMapper.toMap(registerEntity))))
           .thenAnswer((_) async {
         throw InvalidEmailException(
           message: "Email inválido.",
@@ -137,12 +138,13 @@ void main() {
         email: 'testetesteteste',
         password: 'teste',
       );
-      final registerMap = RegisterEmailPasswordMaper(
+      final registerMap = RegisterEmailPasswordMapper(
         email: registerEntity.email,
         password: registerEntity.password,
       );
 
-      when((() => mockDatasource.registerEmailPassword(registerMap.toMap())))
+      when((() => mockDatasource.registerEmailPassword(
+              RegisterEmailPasswordMapper.toMap(registerEntity))))
           .thenAnswer((_) async {
         throw WeekPasswordException(
           message: "Senha fraca.",
