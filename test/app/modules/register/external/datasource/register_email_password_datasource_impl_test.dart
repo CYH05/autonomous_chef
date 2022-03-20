@@ -2,6 +2,7 @@ import 'package:autonomous_chef/app/modules/register/domain/helpers/exceptions.d
 import 'package:autonomous_chef/app/modules/register/external/datasource/register_email_password_datasource_impl.dart';
 import 'package:autonomous_chef/app/modules/register/external/services/firebase_auth_service_interface.dart';
 import 'package:autonomous_chef/app/modules/register/domain/entity/register_email_password_entity.dart';
+import 'package:autonomous_chef/app/modules/register/infra/datasource/register_email_password_datasource_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -9,7 +10,7 @@ class MockService extends Mock implements IFirebaseAuthService {}
 
 void main() {
   late final MockService _service;
-  late final RegisterEmailPasswordDatasourceImpl _datasource;
+  late final IRegisterEmailPasswordDatasource _datasource;
 
   setUpAll(() {
     _service = MockService();
@@ -38,7 +39,7 @@ void main() {
   );
 
   test(
-    'RegisterEmailPasswordDatasourceImpl, should throw EmailAlreadyInUseException when email addres is already in our database',
+    'RegisterEmailPasswordDatasourceImpl, should throw EmailAlreadyInUseException when email address is already in our database',
     () async {
       final Map<String, dynamic> registerEmailPasswordMap = {
         "email": "teste@teste.teste",
