@@ -18,7 +18,7 @@ void main() async {
   setUp(() {
     _firebaseAuth = MockFirebaseAuth();
     _userCredential = MockUserCredential();
-    _service = FirebaseAuthServiceImpl(_firebaseAuth);
+    _service = FirebaseAuthServiceImpl(firebaseAuth: _firebaseAuth);
   });
 
   final userDataMap = {

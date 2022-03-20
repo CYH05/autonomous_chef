@@ -7,7 +7,7 @@ import '../domain/helpers/exceptions.dart';
 class FirebaseAuthServiceImpl implements IFirebaseAuthService {
   final FirebaseAuth _firebaseAuth;
 
-  FirebaseAuthServiceImpl(this._firebaseAuth);
+  const FirebaseAuthServiceImpl({required FirebaseAuth firebaseAuth}): _firebaseAuth = firebaseAuth;
 
   @override
   Future<RegisterEmailPasswordEntity> registerFirebaseAuth(
