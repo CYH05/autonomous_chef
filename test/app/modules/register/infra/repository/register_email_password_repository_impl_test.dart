@@ -1,21 +1,22 @@
 import 'package:autonomous_chef/app/modules/register/domain/entity/register_email_password_entity.dart';
 import 'package:autonomous_chef/app/modules/register/domain/helpers/exceptions.dart';
+import 'package:autonomous_chef/app/modules/register/domain/repository/register_email_password_repository_interface.dart';
 import 'package:autonomous_chef/app/modules/register/infra/datasource/register_email_password_datasource_interface.dart';
 import 'package:autonomous_chef/app/modules/register/infra/mappers/register_email_password_entity_mapper.dart';
 import 'package:autonomous_chef/app/modules/register/infra/repository/register_email_password_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockDatasource extends Mock implements IRegisterEmailPasswordDatasource {}
 
 void main() {
   late MockDatasource mockDatasource;
-  late RegisterEmailPasswordRepositoryImpl registerEmailPasswordRepositoryImpl;
+  late IRegisterEmailPasswordRepository repository;
 
   setUp(() {
     mockDatasource = MockDatasource();
-    registerEmailPasswordRepositoryImpl =
-        RegisterEmailPasswordRepositoryImpl(mockDatasource);
+    repository = RegisterEmailPasswordRepositoryImpl(mockDatasource);
   });
   test(
     'RegisterEmailPasswordRepositoryImpl, should return right when datasource work without any exception.',
@@ -25,18 +26,14 @@ void main() {
         password: "Teste@123",
       );
 
-      final registerMap = RegisterEmailPasswordMapper(
-        email: registerEntity.email,
-        password: registerEntity.password,
-      );
-
-      when((() => mockDatasource.registerEmailPassword(RegisterEmailPasswordMapper.toMap(registerEntity))))
+      when((() => mockDatasource.registerEmailPassword(
+              RegisterEmailPasswordMapper.toMap(registerEntity))))
           .thenAnswer((_) async => registerEntity);
       //TODO
-      final response = await registerEmailPasswordRepositoryImpl
-          .registerWithEmailPassword(registerEntity);
+      final response =
+          await repository.registerWithEmailPassword(registerEntity);
 
-      final result = response.fold((l) => l, (r) => r);
+      final result = response.fold(id, id);
       expect(result, isA<RegisterEmailPasswordEntity>());
     },
   );
@@ -48,12 +45,9 @@ void main() {
         email: "teste@teste.teste",
         password: "Teste@123",
       );
-      final registerMap = RegisterEmailPasswordMapper(
-        email: registerEntity.email,
-        password: registerEntity.password,
-      );
 
-      when((() => mockDatasource.registerEmailPassword(RegisterEmailPasswordMapper.toMap(registerEntity))))
+      when((() => mockDatasource.registerEmailPassword(
+              RegisterEmailPasswordMapper.toMap(registerEntity))))
           .thenAnswer((_) async {
         throw EmailAlreadyInUseException(
           message: "Este email já esta sendo utilizado.",
@@ -63,10 +57,10 @@ void main() {
         );
       });
 
-      final response = await registerEmailPasswordRepositoryImpl
-          .registerWithEmailPassword(registerEntity);
+      final response =
+          await repository.registerWithEmailPassword(registerEntity);
 
-      final result = response.fold((l) => l, (r) => r);
+      final result = response.fold(id, id);
       expect(result, isA<EmailAlreadyInUseException>());
     },
   );
@@ -78,12 +72,9 @@ void main() {
         email: 'teste@teste.teste',
         password: 'Teste@123',
       );
-      final registerMap = RegisterEmailPasswordMapper(
-        email: registerEntity.email,
-        password: registerEntity.password,
-      );
 
-      when((() => mockDatasource.registerEmailPassword(RegisterEmailPasswordMapper.toMap(registerEntity))))
+      when((() => mockDatasource.registerEmailPassword(
+              RegisterEmailPasswordMapper.toMap(registerEntity))))
           .thenAnswer((_) async {
         throw EmailOrPasswordEnabledException(
           message: "Algo inesperado ocorreu.",
@@ -93,10 +84,10 @@ void main() {
         );
       });
 
-      final response = await registerEmailPasswordRepositoryImpl
-          .registerWithEmailPassword(registerEntity);
+      final response =
+          await repository.registerWithEmailPassword(registerEntity);
 
-      final result = response.fold((l) => l, (r) => r);
+      final result = response.fold(id, id);
       expect(result, isA<EmailOrPasswordEnabledException>());
     },
   );
@@ -106,10 +97,6 @@ void main() {
       const registerEntity = RegisterEmailPasswordEntity(
         email: 'testetesteteste',
         password: 'Teste@123',
-      );
-      final registerMap = RegisterEmailPasswordMapper(
-        email: registerEntity.email,
-        password: registerEntity.password,
       );
 
       when((() => mockDatasource.registerEmailPassword(
@@ -123,10 +110,10 @@ void main() {
         );
       });
 
-      final response = await registerEmailPasswordRepositoryImpl
-          .registerWithEmailPassword(registerEntity);
+      final response =
+          await repository.registerWithEmailPassword(registerEntity);
 
-      final result = response.fold((l) => l, (r) => r);
+      final result = response.fold(id, id);
       expect(result, isA<InvalidEmailException>());
     },
   );
@@ -137,10 +124,6 @@ void main() {
       const registerEntity = RegisterEmailPasswordEntity(
         email: 'testetesteteste',
         password: 'teste',
-      );
-      final registerMap = RegisterEmailPasswordMapper(
-        email: registerEntity.email,
-        password: registerEntity.password,
       );
 
       when((() => mockDatasource.registerEmailPassword(
@@ -154,10 +137,10 @@ void main() {
         );
       });
 
-      final response = await registerEmailPasswordRepositoryImpl
-          .registerWithEmailPassword(registerEntity);
+      final response =
+          await repository.registerWithEmailPassword(registerEntity);
 
-      final result = response.fold((l) => l, (r) => r);
+      final result = response.fold(id, id);
       expect(result, isA<WeekPasswordException>());
     },
   );
