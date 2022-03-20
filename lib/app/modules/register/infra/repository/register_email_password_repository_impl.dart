@@ -11,7 +11,7 @@ class RegisterEmailPasswordRepositoryImpl
     implements IRegisterEmailPasswordRepository {
   final IRegisterEmailPasswordDatasource _datasource;
 
-  RegisterEmailPasswordRepositoryImpl(this._datasource);
+  const RegisterEmailPasswordRepositoryImpl(this._datasource);
 
   @override
   Future<Either<IAppException, RegisterEmailPasswordEntity>>
