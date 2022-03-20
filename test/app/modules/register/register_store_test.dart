@@ -22,7 +22,7 @@ void main() {
     registerFallbackValue(EntityFake());
   });
   storeTest<RegisterStore>(
-    "description",
+    "RegisterStore, should change your store status to tripleLoading, tripleState and tripleLoading in order.",
     build: () {
       const registerEntity = RegisterEmailPasswordEntity(
         email: "teste@teste.teste",
