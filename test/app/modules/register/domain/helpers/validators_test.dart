@@ -40,35 +40,35 @@ void main() {
     },
   );
   test(
-    "validatePassword, should return false when password don't reach mininal lenght.",
+    "validatePassword, should return false when password don't reach mininal length.",
     () {
       const String password = "Teste@1";
       expect(validatePassword(password), false);
     },
   );
   test(
-    "validatePassword, should return false when password don't have at least one uppercase character.",
+    "validatePassword, should return false when password don't have at least an uppercase character.",
     () {
       const String password = "teste@123";
       expect(validatePassword(password), false);
     },
   );
   test(
-    "validatePassword, should return false when password don't have at least one lowercase character.",
+    "validatePassword, should return false when password don't have at least an lowercase character.",
     () {
       const String password = "TESTE@123";
       expect(validatePassword(password), false);
     },
   );
   test(
-    "validatePassword, should return false when password don't have at least one special character.",
+    "validatePassword, should return false when password don't have at least an special character.",
     () {
       const String password = "TESTE123";
       expect(validatePassword(password), false);
     },
   );
   test(
-    "validatePassword, should return false when password don't have at least one digit character.",
+    "validatePassword, should return false when password don't have at least an digit character.",
     () {
       const String password = "TESTE@!@#";
       expect(validatePassword(password), false);
