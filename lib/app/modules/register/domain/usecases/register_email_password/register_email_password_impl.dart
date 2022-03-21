@@ -18,17 +18,12 @@ class RegisterEmailPasswordUsecaseImpl
   ) async {
     if (!validateEmail(registerEntity.email)) {
       return const Left(
-        EmailValidationError(
-          message: "Preencha com um endereço de e-mail válido.",
-        ),
+        EmailValidationError(),
       );
     }
     if (!validatePassword(registerEntity.password)) {
       return const Left(
-        PasswordValidationError(
-          message:
-              "Sua senha deve conter ao menos:\n8 caracteres;\n1 caractere minusculo;\n1 caractere maisculo;\n1 múmero;\n1 caractere especial.",
-        ),
+        PasswordValidationError(),
       );
     }
 

@@ -1,7 +1,6 @@
 import 'error.dart';
 
-//TODO ver a necessidade dessa classe
 class ErrorMock {
-  final emailValidationError = const EmailValidationError(message: '');
-  final passwordValidationError = const PasswordValidationError(message: '');
+  final emailValidationError = const EmailValidationError();
+  final passwordValidationError = const PasswordValidationError();
 }

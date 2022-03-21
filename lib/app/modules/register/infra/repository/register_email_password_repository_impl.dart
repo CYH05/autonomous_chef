@@ -27,29 +27,24 @@ class RegisterEmailPasswordRepositoryImpl
     } on EmailAlreadyInUseException catch (_, stackTrace) {
       return Left(
         EmailAlreadyInUseException(
-          message: "Este email já esta sendo utilizado.",
           stackTrace: stackTrace,
         ),
       );
     } on EmailOrPasswordEnabledException catch (_, stackTrace) {
       return Left(
         EmailOrPasswordEnabledException(
-          message:
-              "Email ou senha estão desabilitados, habilite a opção no console do firebase.",
           stackTrace: stackTrace,
         ),
       );
     } on InvalidEmailException catch (_, stackTrace) {
       return Left(
         InvalidEmailException(
-          message: "Endereço de email inválida.",
           stackTrace: stackTrace,
         ),
       );
     } on WeekPasswordException catch (_, stackTrace) {
       return Left(
         WeekPasswordException(
-          message: "A senha é considerada muito fraca.",
           stackTrace: stackTrace,
         ),
       );

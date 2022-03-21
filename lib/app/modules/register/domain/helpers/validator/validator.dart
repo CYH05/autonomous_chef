@@ -18,9 +18,15 @@ bool validatePassword(String password) {
   */
   final regex = RegExp(
       r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}");
-  
+
   if (regex.hasMatch(password)) {
     return true;
   }
   return false;
 }
+
+bool comparePassword(
+  String password,
+  String comparePassword,
+) =>
+    password == comparePassword;

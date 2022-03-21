@@ -22,25 +22,21 @@ class FirebaseAuthServiceImpl implements IFirebaseAuthService {
     } on FirebaseAuthException catch (error) {
       if (error.code == "email-already-in-use") {
         throw EmailAlreadyInUseException(
-          message: error.message!,
           stackTrace: error.stackTrace!,
         );
       }
       if (error.code == "invalid-email") {
         throw InvalidEmailException(
-          message: error.message!,
           stackTrace: error.stackTrace!,
         );
       }
       if (error.code == "operation-not-allowed") {
         throw EmailOrPasswordEnabledException(
-          message: error.message!,
           stackTrace: error.stackTrace!,
         );
       }
       if (error.code == "weak-password") {
         throw WeekPasswordException(
-          message: error.message!,
           stackTrace: error.stackTrace!,
         );
       }

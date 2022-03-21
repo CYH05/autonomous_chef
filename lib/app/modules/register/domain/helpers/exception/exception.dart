@@ -9,28 +9,34 @@ class RegisterException extends AppException {
 
 class EmailAlreadyInUseException extends RegisterException {
   const EmailAlreadyInUseException({
-    required String message,
     required StackTrace stackTrace,
-  }) : super(message: message, stackTrace: stackTrace);
+  }) : super(
+          message: 'Este email já esta sendo utilizado.',
+          stackTrace: stackTrace,
+        );
 }
 
 class InvalidEmailException extends RegisterException {
   const InvalidEmailException({
-    required String message,
     required StackTrace stackTrace,
-  }) : super(message: message, stackTrace: stackTrace);
+  }) : super(message: 'Endereço de email inválida.', stackTrace: stackTrace);
 }
 
 class EmailOrPasswordEnabledException extends RegisterException {
   const EmailOrPasswordEnabledException({
-    required String message,
     required StackTrace stackTrace,
-  }) : super(message: message, stackTrace: stackTrace);
+  }) : super(
+          message:
+              'Email ou senha estão desabilitados, habilite a opção no console do firebase.',
+          stackTrace: stackTrace,
+        );
 }
 
 class WeekPasswordException extends RegisterException {
   const WeekPasswordException({
-    required String message,
     required StackTrace stackTrace,
-  }) : super(message: message, stackTrace: stackTrace);
+  }) : super(
+          message: 'A senha é considerada muito fraca.',
+          stackTrace: stackTrace,
+        );
 }

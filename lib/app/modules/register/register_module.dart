@@ -12,16 +12,16 @@ class RegisterModule extends Module {
   @override
   final List<Bind> binds = [
     Bind.lazySingleton((i) => RegisterStore(registerEmailPasswordUsecase: i())),
-    Bind.singleton(
+    Bind.lazySingleton(
       (i) => RegisterEmailPasswordUsecaseImpl(i()),
     ),
-    Bind.singleton(
+    Bind.lazySingleton(
       (i) => RegisterEmailPasswordRepositoryImpl(i()),
     ),
-    Bind.singleton(
+    Bind.lazySingleton(
       (i) => RegisterEmailPasswordDatasourceImpl(service: i()),
     ),
-    Bind.singleton(
+    Bind.lazySingleton(
       (i) => FirebaseAuthServiceImpl(firebaseAuth: FirebaseAuth.instance),
     ),
     //TODO verificar qnd terminar o core
