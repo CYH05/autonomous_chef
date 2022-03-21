@@ -1,4 +1,4 @@
-import 'package:autonomous_chef/app/modules/register/domain/usecases/implementations/register_email_password_usecase_impl.dart';
+import 'package:autonomous_chef/app/modules/register/domain/usecases/register_email_password/register_email_password_impl.dart';
 import 'package:autonomous_chef/app/modules/register/register_Page.dart';
 import 'package:autonomous_chef/app/modules/register/register_store.dart';
 import 'package:autonomous_chef/app/modules/register/service/firebase_auth_service_impl.dart';
@@ -13,20 +13,13 @@ class RegisterModule extends Module {
   final List<Bind> binds = [
     Bind.lazySingleton((i) => RegisterStore(registerEmailPasswordUsecase: i())),
     Bind.singleton(
-      (i) => RegisterEmailPasswordUsecaseImpl(
-        i.get<RegisterEmailPasswordRepositoryImpl>(),
-        //TODO construtor possicional
-      ),
+      (i) => RegisterEmailPasswordUsecaseImpl(i()),
     ),
     Bind.singleton(
-      (i) => RegisterEmailPasswordRepositoryImpl(
-        i.get<RegisterEmailPasswordDatasourceImpl>(),
-        //TODO construtor possicional
-      ),
+      (i) => RegisterEmailPasswordRepositoryImpl(i()),
     ),
     Bind.singleton(
       (i) => RegisterEmailPasswordDatasourceImpl(service: i()),
-      //TODO construtor nomeado e rpivado
     ),
     Bind.singleton(
       (i) => FirebaseAuthServiceImpl(firebaseAuth: FirebaseAuth.instance),

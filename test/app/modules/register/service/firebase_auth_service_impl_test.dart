@@ -1,9 +1,11 @@
-import 'package:autonomous_chef/app/modules/register/domain/entity/register_email_password_entity.dart';
-import 'package:autonomous_chef/app/modules/register/domain/helpers/exceptions.dart';
+import 'package:autonomous_chef/app/modules/register/domain/entity/mock.dart';
+import 'package:autonomous_chef/app/modules/register/domain/helpers/exception/exception.dart';
+import 'package:autonomous_chef/app/modules/register/infra/mappers/register_email_password_entity_mapper.dart';
 import 'package:autonomous_chef/app/modules/register/service/firebase_auth_service_impl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
@@ -11,51 +13,55 @@ class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 class MockUserCredential extends Mock implements UserCredential {}
 
 void main() async {
-  late final MockFirebaseAuth _firebaseAuth;
-  late final MockUserCredential _userCredential;
-  late final FirebaseAuthServiceImpl _service;
+  late MockFirebaseAuth _firebaseAuthMock;
+  late MockUserCredential _userCredentialMock;
+  late FirebaseAuthServiceImpl _service;
+  late RegisterEmailPasswordMock _entityMock;
 
   setUp(() {
-    _firebaseAuth = MockFirebaseAuth();
-    _userCredential = MockUserCredential();
-    _service = FirebaseAuthServiceImpl(firebaseAuth: _firebaseAuth);
+    _firebaseAuthMock = MockFirebaseAuth();
+    _userCredentialMock = MockUserCredential();
+    _service = FirebaseAuthServiceImpl(firebaseAuth: _firebaseAuthMock);
+    _entityMock = RegisterEmailPasswordMock();
   });
-
-  final userDataMap = {
-    "email": "testEmail",
-    "password": "testPassword",
-  };
-
   test(
     'FirebaseAuthServiceImpl, should return void when firebaseAuth work normally.',
     () async {
-      when(() => _firebaseAuth.createUserWithEmailAndPassword(
-            email: "testEmail",
-            password: "testPassword",
-          )).thenAnswer((invocation) async => _userCredential);
+      when(() => _firebaseAuthMock.createUserWithEmailAndPassword(
+            email: _entityMock.entityValid.email,
+            password: _entityMock.entityValid.password,
+          )).thenAnswer((invocation) async => _userCredentialMock);
 
-      final result = await _service.registerFirebaseAuth(userDataMap);
-      expect(result, isA<RegisterEmailPasswordEntity>());
+      final result = await _service.registerFirebaseAuth(
+        RegisterEmailPasswordMapper.toMap(_entityMock.entityValid),
+      );
+      expect(result, isA<Unit>());
     },
   );
 
-// TODO ver como testar o lançamento de exceção do firebase seguido do lançamento de exceção do app.
   test(
     'FirebaseAuthServiceImpl, should throw a firebaseException with error code: email-already-in-use.',
     () async {
       when(
-        () => _firebaseAuth.createUserWithEmailAndPassword(
+        () => _firebaseAuthMock.createUserWithEmailAndPassword(
           email: "testEmail",
           password: "testPassword",
         ),
-      ).thenAnswer(
+      ).thenThrow(FirebaseAuthException(code: "email-already-in-use"));
+
+      /* thenAnswer(
         (invocation) async =>
             //TODO usar o Skip() para não detectar no flutter test run e diminuir a taxa de coverage
             throw FirebaseAuthException(code: "email-already-in-use"),
-      );
+      ); */
 
-      expect(() async => await _service.registerFirebaseAuth(userDataMap),
-          throwsA(isA<EmailAlreadyInUseException>()));
+      expect(
+          () async => await _service.registerFirebaseAuth(
+                RegisterEmailPasswordMapper.toMap(_entityMock.entityValid),
+              ),
+          throwsA(
+            isA<EmailAlreadyInUseException>(),
+          ));
     },
   );
 }

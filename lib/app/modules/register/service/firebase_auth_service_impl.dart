@@ -1,16 +1,17 @@
 import 'package:autonomous_chef/app/modules/register/external/services/firebase_auth_service_interface.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fpdart/fpdart.dart';
 
-import '../domain/entity/register_email_password_entity.dart';
-import '../domain/helpers/exceptions.dart';
+import '../domain/helpers/exception/exception.dart';
 
 class FirebaseAuthServiceImpl implements IFirebaseAuthService {
   final FirebaseAuth _firebaseAuth;
 
-  const FirebaseAuthServiceImpl({required FirebaseAuth firebaseAuth}): _firebaseAuth = firebaseAuth;
+  const FirebaseAuthServiceImpl({required FirebaseAuth firebaseAuth})
+      : _firebaseAuth = firebaseAuth;
 
   @override
-  Future<RegisterEmailPasswordEntity> registerFirebaseAuth(
+  Future<Unit> registerFirebaseAuth(
     Map<String, dynamic> map,
   ) async {
     try {
@@ -44,9 +45,6 @@ class FirebaseAuthServiceImpl implements IFirebaseAuthService {
         );
       }
     }
-    return RegisterEmailPasswordEntity(
-      email: map['email'],
-      password: map['password'],
-    );
+    return unit;
   }
 }

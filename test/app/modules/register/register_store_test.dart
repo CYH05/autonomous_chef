@@ -1,5 +1,6 @@
 import 'package:autonomous_chef/app/modules/register/domain/entity/register_email_password_entity.dart';
-import 'package:autonomous_chef/app/modules/register/domain/useCases/interfaces/register_email_password_usecase_interface.dart';
+import 'package:autonomous_chef/app/modules/register/domain/usecases/register_email_password/register_email_password_interface.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:autonomous_chef/app/modules/register/register_store.dart';
 

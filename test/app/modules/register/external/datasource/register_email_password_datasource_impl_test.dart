@@ -1,62 +1,55 @@
-import 'package:autonomous_chef/app/modules/register/domain/helpers/exceptions.dart';
+import 'package:autonomous_chef/app/modules/register/domain/entity/mock.dart';
+import 'package:autonomous_chef/app/modules/register/domain/helpers/exception/exception.dart';
+import 'package:autonomous_chef/app/modules/register/domain/helpers/exception/mock.dart';
 import 'package:autonomous_chef/app/modules/register/external/datasource/register_email_password_datasource_impl.dart';
 import 'package:autonomous_chef/app/modules/register/external/services/firebase_auth_service_interface.dart';
-import 'package:autonomous_chef/app/modules/register/domain/entity/register_email_password_entity.dart';
 import 'package:autonomous_chef/app/modules/register/infra/datasource/register_email_password_datasource_interface.dart';
+import 'package:autonomous_chef/app/modules/register/infra/mappers/register_email_password_entity_mapper.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockService extends Mock implements IFirebaseAuthService {}
 
 void main() {
-  late final MockService _service;
-  late final IRegisterEmailPasswordDatasource _datasource;
+  late MockService _service;
+  late IRegisterEmailPasswordDatasource _datasource;
+  late ExceptionMock _exceptionMock;
+  late RegisterEmailPasswordMock _entityMock;
 
-  setUpAll(() {
+  setUp(() {
     _service = MockService();
     _datasource = RegisterEmailPasswordDatasourceImpl(service: _service);
+    _exceptionMock = ExceptionMock();
+    _entityMock = RegisterEmailPasswordMock();
   });
   test(
     'RegisterEmailPasswordDatasourceImpl, should return RegisterEmailPasswordEntity when service work normally',
     () async {
-      final Map<String, dynamic> registerEmailPasswordMap = {
-        "email": "teste@teste.teste",
-        "password": "Teste@123",
-      };
-
-      when(() => _service.registerFirebaseAuth(registerEmailPasswordMap))
-          .thenAnswer((_) async => const RegisterEmailPasswordEntity(
-                email: "teste@teste.teste",
-                password: "Teste@123",
-              ));
-
-      final result = await _datasource.registerEmailPassword(
-        registerEmailPasswordMap,
+      when(() => _service.registerFirebaseAuth(
+            RegisterEmailPasswordMapper.toMap(_entityMock.entityValid),
+          )).thenAnswer(
+        (_) async => unit,
       );
 
-      expect(result, isA<RegisterEmailPasswordEntity>());
+      final result = await _datasource.registerEmailPassword(
+        RegisterEmailPasswordMapper.toMap(_entityMock.entityValid),
+      );
+
+      expect(result, isA<Unit>());
     },
   );
 
   test(
     'RegisterEmailPasswordDatasourceImpl, should throw EmailAlreadyInUseException when email address is already in our database',
     () async {
-      final Map<String, dynamic> registerEmailPasswordMap = {
-        "email": "teste@teste.teste",
-        "password": "Teste@123",
-      };
-
-      when(() => _service.registerFirebaseAuth(registerEmailPasswordMap))
-          .thenAnswer(
-        (_) async => throw EmailAlreadyInUseException(
-          message: "Este email já esta sendo utilizado.",
-          stackTrace: StackTrace.fromString("stackTraceMessage"),
-        ),
-      );
+      when(() => _service.registerFirebaseAuth(
+            RegisterEmailPasswordMapper.toMap(_entityMock.entityValid),
+          )).thenThrow(_exceptionMock.emailAlreadyInUseException);
 
       expect(
         () async => await _datasource.registerEmailPassword(
-          registerEmailPasswordMap,
+          RegisterEmailPasswordMapper.toMap(_entityMock.entityValid),
         ),
         throwsA(
           isA<EmailAlreadyInUseException>(),

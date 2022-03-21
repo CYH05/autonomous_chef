@@ -1,5 +1,7 @@
+import 'package:autonomous_chef/app/modules/register/domain/entity/mock.dart';
 import 'package:autonomous_chef/app/modules/register/domain/entity/register_email_password_entity.dart';
-import 'package:autonomous_chef/app/modules/register/domain/helpers/exceptions.dart';
+import 'package:autonomous_chef/app/modules/register/domain/helpers/exception/exception.dart';
+import 'package:autonomous_chef/app/modules/register/domain/helpers/exception/mock.dart';
 import 'package:autonomous_chef/app/modules/register/domain/repository/register_email_password_repository_interface.dart';
 import 'package:autonomous_chef/app/modules/register/infra/datasource/register_email_password_datasource_interface.dart';
 import 'package:autonomous_chef/app/modules/register/infra/mappers/register_email_password_entity_mapper.dart';
@@ -11,27 +13,26 @@ import 'package:mocktail/mocktail.dart';
 class MockDatasource extends Mock implements IRegisterEmailPasswordDatasource {}
 
 void main() {
-  late MockDatasource mockDatasource;
-  late IRegisterEmailPasswordRepository repository;
+  late MockDatasource _mockDatasource;
+  late IRegisterEmailPasswordRepository _repository;
+  late ExceptionMock _exceptionMock;
+  late RegisterEmailPasswordMock _entityMock;
 
   setUp(() {
-    mockDatasource = MockDatasource();
-    repository = RegisterEmailPasswordRepositoryImpl(mockDatasource);
+    _mockDatasource = MockDatasource();
+    _repository = RegisterEmailPasswordRepositoryImpl(_mockDatasource);
+    _exceptionMock = ExceptionMock();
+    _entityMock = RegisterEmailPasswordMock();
   });
   test(
     'RegisterEmailPasswordRepositoryImpl, should return right when datasource work without any exception.',
     () async {
-      const registerEntity = RegisterEmailPasswordEntity(
-        email: "teste@teste.teste",
-        password: "Teste@123",
-      );
+      when((() => _mockDatasource.registerEmailPassword(
+              RegisterEmailPasswordMapper.toMap(_entityMock.entityValid))))
+          .thenAnswer((_) async => unit);
 
-      when((() => mockDatasource.registerEmailPassword(
-              RegisterEmailPasswordMapper.toMap(registerEntity))))
-          .thenAnswer((_) async => registerEntity);
-      //TODO
       final response =
-          await repository.registerWithEmailPassword(registerEntity);
+          await _repository.registerWithEmailPassword(_entityMock.entityValid);
 
       final result = response.fold(id, id);
       expect(result, isA<RegisterEmailPasswordEntity>());
@@ -41,24 +42,12 @@ void main() {
   test(
     'RegisterEmailPasswordRepositoryImpl, should return left when datasource throw EmailAlreadyInUseException.',
     () async {
-      const registerEntity = RegisterEmailPasswordEntity(
-        email: "teste@teste.teste",
-        password: "Teste@123",
-      );
-
-      when((() => mockDatasource.registerEmailPassword(
-              RegisterEmailPasswordMapper.toMap(registerEntity))))
-          .thenAnswer((_) async {
-        throw EmailAlreadyInUseException(
-          message: "Este email já esta sendo utilizado.",
-          stackTrace: StackTrace.fromString(
-            "Este email já esta sendo utilizado.",
-          ),
-        );
-      });
+      when((() => _mockDatasource.registerEmailPassword(
+              RegisterEmailPasswordMapper.toMap(_entityMock.entityValid))))
+          .thenThrow(_exceptionMock.emailAlreadyInUseException);
 
       final response =
-          await repository.registerWithEmailPassword(registerEntity);
+          await _repository.registerWithEmailPassword(_entityMock.entityValid);
 
       final result = response.fold(id, id);
       expect(result, isA<EmailAlreadyInUseException>());
@@ -68,24 +57,12 @@ void main() {
   test(
     'RegisterEmailPasswordRepositoryImpl, should return left when datasource throw FirebaseAuthCouldNotRegisterException.',
     () async {
-      const registerEntity = RegisterEmailPasswordEntity(
-        email: 'teste@teste.teste',
-        password: 'Teste@123',
-      );
-
-      when((() => mockDatasource.registerEmailPassword(
-              RegisterEmailPasswordMapper.toMap(registerEntity))))
-          .thenAnswer((_) async {
-        throw EmailOrPasswordEnabledException(
-          message: "Algo inesperado ocorreu.",
-          stackTrace: StackTrace.fromString(
-            "Este email já esta sendo utilizado.",
-          ),
-        );
-      });
+      when((() => _mockDatasource.registerEmailPassword(
+              RegisterEmailPasswordMapper.toMap(_entityMock.entityValid))))
+          .thenThrow(_exceptionMock.emailOrPasswordEnabledException);
 
       final response =
-          await repository.registerWithEmailPassword(registerEntity);
+          await _repository.registerWithEmailPassword(_entityMock.entityValid);
 
       final result = response.fold(id, id);
       expect(result, isA<EmailOrPasswordEnabledException>());
@@ -94,24 +71,12 @@ void main() {
   test(
     'RegisterEmailPasswordRepositoryImpl, should return left when datasource throw InvalidEmailException.',
     () async {
-      const registerEntity = RegisterEmailPasswordEntity(
-        email: 'testetesteteste',
-        password: 'Teste@123',
-      );
-
-      when((() => mockDatasource.registerEmailPassword(
-              RegisterEmailPasswordMapper.toMap(registerEntity))))
-          .thenAnswer((_) async {
-        throw InvalidEmailException(
-          message: "Email inválido.",
-          stackTrace: StackTrace.fromString(
-            "Informe um endereço de email válido.",
-          ),
-        );
-      });
+      when((() => _mockDatasource.registerEmailPassword(
+              RegisterEmailPasswordMapper.toMap(_entityMock.entityValid))))
+          .thenThrow(_exceptionMock.invalidEmailException);
 
       final response =
-          await repository.registerWithEmailPassword(registerEntity);
+          await _repository.registerWithEmailPassword(_entityMock.entityValid);
 
       final result = response.fold(id, id);
       expect(result, isA<InvalidEmailException>());
@@ -121,24 +86,17 @@ void main() {
   test(
     'RegisterEmailPasswordRepositoryImpl, should return left when datasource throw WeekPasswordException.',
     () async {
-      const registerEntity = RegisterEmailPasswordEntity(
-        email: 'testetesteteste',
-        password: 'teste',
+      when(
+        (() => _mockDatasource.registerEmailPassword(
+              RegisterEmailPasswordMapper.toMap(
+                _entityMock.entityWeekPassword,
+              ),
+            )),
+      ).thenThrow(_exceptionMock.weekPasswordException);
+
+      final response = await _repository.registerWithEmailPassword(
+        _entityMock.entityWeekPassword,
       );
-
-      when((() => mockDatasource.registerEmailPassword(
-              RegisterEmailPasswordMapper.toMap(registerEntity))))
-          .thenAnswer((_) async {
-        throw WeekPasswordException(
-          message: "Senha fraca.",
-          stackTrace: StackTrace.fromString(
-            "Aumente a complexidade da sua senha.",
-          ),
-        );
-      });
-
-      final response =
-          await repository.registerWithEmailPassword(registerEntity);
 
       final result = response.fold(id, id);
       expect(result, isA<WeekPasswordException>());

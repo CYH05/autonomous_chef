@@ -14,6 +14,7 @@ class RegisterEmailPasswordMapper extends RegisterEmailPasswordEntity {
       password: registerEmailPasswordMapper['password'],
     );
   }
+
   static Map<String, String> toMap(RegisterEmailPasswordEntity registerEntity) {
     return {
       "email": registerEntity.email,

@@ -1,11 +1,11 @@
-import 'package:autonomous_chef/app/modules/register/domain/helpers/errors.dart';
+import 'package:autonomous_chef/app/modules/register/domain/helpers/error/error.dart';
 import 'package:fpdart/fpdart.dart';
 
 import '../../../../../core/helpers/app_exception.dart';
 import '../../entity/register_email_password_entity.dart';
-import '../../helpers/validators.dart';
+import '../../helpers/validator/validator.dart';
 import '../../repository/register_email_password_repository_interface.dart';
-import '../interfaces/register_email_password_usecase_interface.dart';
+import 'register_email_password_interface.dart';
 
 class RegisterEmailPasswordUsecaseImpl
     implements IRegisterEmailPasswordUsecase {
@@ -17,14 +17,14 @@ class RegisterEmailPasswordUsecaseImpl
     RegisterEmailPasswordEntity registerEntity,
   ) async {
     if (!validateEmail(registerEntity.email)) {
-      return Left(
+      return const Left(
         EmailValidationError(
           message: "Preencha com um endereço de e-mail válido.",
         ),
       );
     }
     if (!validatePassword(registerEntity.password)) {
-      return Left(
+      return const Left(
         PasswordValidationError(
           message:
               "Sua senha deve conter ao menos:\n8 caracteres;\n1 caractere minusculo;\n1 caractere maisculo;\n1 múmero;\n1 caractere especial.",

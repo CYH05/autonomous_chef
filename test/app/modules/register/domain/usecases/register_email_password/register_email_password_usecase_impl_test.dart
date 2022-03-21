@@ -1,7 +1,7 @@
-import 'package:autonomous_chef/app/modules/register/domain/entity/register_email_password_entity.dart';
-import 'package:autonomous_chef/app/modules/register/domain/helpers/errors.dart';
+import 'package:autonomous_chef/app/modules/register/domain/entity/mock.dart';
+import 'package:autonomous_chef/app/modules/register/domain/helpers/error/error.dart';
 import 'package:autonomous_chef/app/modules/register/domain/repository/register_email_password_repository_interface.dart';
-import 'package:autonomous_chef/app/modules/register/domain/useCases/implementations/register_email_password_usecase_impl.dart';
+import 'package:autonomous_chef/app/modules/register/domain/usecases/register_email_password/register_email_password_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
@@ -9,25 +9,22 @@ import 'package:mocktail/mocktail.dart';
 class MockRepo extends Mock implements IRegisterEmailPasswordRepository {}
 
 void main() {
-  late IRegisterEmailPasswordRepository mockRepo;
-  late RegisterEmailPasswordUsecaseImpl usecase;
+  late IRegisterEmailPasswordRepository _mockRepo;
+  late RegisterEmailPasswordUsecaseImpl _usecase;
+  late RegisterEmailPasswordMock _entityMock;
 
   setUp(() {
-    mockRepo = MockRepo();
-    usecase = RegisterEmailPasswordUsecaseImpl(mockRepo);
+    _mockRepo = MockRepo();
+    _usecase = RegisterEmailPasswordUsecaseImpl(_mockRepo);
+    _entityMock = RegisterEmailPasswordMock();
   });
   test(
     'RegisterEmailPasswordUsecaseImpl should return right, when email and password is valid and the repository work normally',
     () async {
-      const registerEntity = RegisterEmailPasswordEntity(
-        email: "teste@teste.teste",
-        password: "Teste@123",
-      );
+      when(() => _mockRepo.registerWithEmailPassword(_entityMock.entityValid))
+          .thenAnswer((_) async => Right(_entityMock.entityValid));
 
-      when(() => mockRepo.registerWithEmailPassword(registerEntity))
-          .thenAnswer((_) async => const Right(registerEntity));
-
-      final response = await usecase(registerEntity);
+      final response = await _usecase(_entityMock.entityValid);
 
       /*
       De forma abreviada
@@ -43,12 +40,7 @@ void main() {
   test(
     'RegisterEmailPasswordUsecaseImpl should return left, when email is invalid.',
     () async {
-      const registerEntity = RegisterEmailPasswordEntity(
-        email: "testeteste.teste",
-        password: "Teste@123",
-      );
-
-      final response = await usecase(registerEntity);
+      final response = await _usecase(_entityMock.entityInvalidEmail);
 
       final result = response.fold(id, id);
 
@@ -59,12 +51,7 @@ void main() {
   test(
     'RegisterEmailPasswordUsecaseImpl should return left, when password is invalid.',
     () async {
-      const registerEntity = RegisterEmailPasswordEntity(
-        email: "teste@teste.teste",
-        password: "teste@123",
-      );
-
-      final response = await usecase(registerEntity);
+      final response = await _usecase(_entityMock.entityInvalidPassword);
 
       final result = response.fold(id, id);
 

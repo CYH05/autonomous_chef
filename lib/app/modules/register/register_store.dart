@@ -2,7 +2,7 @@ import 'package:autonomous_chef/app/modules/register/domain/entity/register_emai
 import 'package:flutter_triple/flutter_triple.dart';
 
 import '../../core/helpers/app_exception.dart';
-import 'domain/useCases/interfaces/register_email_password_usecase_interface.dart';
+import 'domain/usecases/register_email_password/register_email_password_interface.dart';
 
 class RegisterStore extends NotifierStore<IAppException, bool> {
   final IRegisterEmailPasswordUsecase _registerEmailPasswordUsecase;

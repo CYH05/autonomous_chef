@@ -1,77 +1,74 @@
-import 'package:autonomous_chef/app/modules/register/domain/helpers/validators.dart';
+import 'package:autonomous_chef/app/modules/register/domain/helpers/validator/mock.dart';
+import 'package:autonomous_chef/app/modules/register/domain/helpers/validator/validator.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  late EmailPasswordValidatorMock _mock;
+
+  setUp(() {
+    _mock = EmailPasswordValidatorMock();
+  });
+
   test(
     'validateEmail, should return true when email is valid.',
     () {
-      const String email = "teste@teste.teste";
-      expect(validateEmail(email), true);
+      expect(validateEmail(_mock.validEmail), true);
     },
   );
   test(
     'validatePassword, should return true when email is valid.',
     () {
-      const String password = "Teste@123";
-      expect(validatePassword(password), true);
+      expect(validatePassword(_mock.validPassword), true);
     },
   );
   test(
     'validateEmail, should return false when email is blank.',
     () {
-      const String email = "";
-      expect(validateEmail(email), false);
+      expect(validateEmail(_mock.emailBlank), false);
     },
   );
 
   test(
     "validateEmail, should return false when email don't have at(@).",
     () {
-      const String email = "testeteste.teste";
-      expect(validateEmail(email), false);
+      expect(validateEmail(_mock.invalidEmail), false);
     },
   );
 
   test(
     'validatePassword, should return false when password is blank.',
     () {
-      const String password = "";
-      expect(validatePassword(password), false);
+      expect(validatePassword(_mock.passwordBlank), false);
     },
   );
   test(
     "validatePassword, should return false when password don't reach mininal length.",
     () {
-      const String password = "Teste@1";
-      expect(validatePassword(password), false);
+      expect(validatePassword(_mock.passwordWithoutMinLength), false);
     },
   );
   test(
     "validatePassword, should return false when password don't have at least an uppercase character.",
     () {
-      const String password = "teste@123";
-      expect(validatePassword(password), false);
+      expect(validatePassword(_mock.passwordWithoutUppercase), false);
     },
   );
   test(
     "validatePassword, should return false when password don't have at least an lowercase character.",
     () {
-      const String password = "TESTE@123";
-      expect(validatePassword(password), false);
+      expect(validatePassword(_mock.passwordWithoutLowercase), false);
     },
   );
   test(
     "validatePassword, should return false when password don't have at least an special character.",
     () {
-      const String password = "TESTE123";
-      expect(validatePassword(password), false);
+      expect(validatePassword(_mock.passwordWithoutSpecial), false);
     },
   );
   test(
     "validatePassword, should return false when password don't have at least an digit character.",
     () {
-      const String password = "TESTE@!@#";
-      expect(validatePassword(password), false);
+      expect(validatePassword(_mock.passwordWithoutDigit), false);
     },
   );
 }
