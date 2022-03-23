@@ -8,7 +8,7 @@ import 'package:fpdart/fpdart.dart';
 import '../../../../../core/helpers/app_exception.dart';
 
 class LoginEmailPasswordUsecaseImpl implements ILoginEmailPasswordUsecase {
-  final ILoginEmailPasswordRepositoy _repository;
+  final ILoginEmailPasswordRepository _repository;
 
   const LoginEmailPasswordUsecaseImpl(this._repository);
 

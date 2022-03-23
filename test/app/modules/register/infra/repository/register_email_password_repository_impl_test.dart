@@ -4,7 +4,7 @@ import 'package:autonomous_chef/app/modules/register/domain/helpers/exception/ex
 import 'package:autonomous_chef/app/modules/register/domain/helpers/exception/mock.dart';
 import 'package:autonomous_chef/app/modules/register/domain/repository/register_email_password_repository_interface.dart';
 import 'package:autonomous_chef/app/modules/register/infra/datasource/register_email_password_datasource_interface.dart';
-import 'package:autonomous_chef/app/modules/register/infra/mappers/register_email_password_entity_mapper.dart';
+import 'package:autonomous_chef/app/modules/register/infra/mapper/register_email_password_entity_mapper.dart';
 import 'package:autonomous_chef/app/modules/register/infra/repository/register_email_password_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
