@@ -1,8 +1,8 @@
-class LoginEmailPasswordentity {
+class LoginEmailPasswordEntity {
   final String email;
   final String password;
 
-  const LoginEmailPasswordentity({
+  const LoginEmailPasswordEntity({
     required this.email,
     required this.password,
   });

@@ -19,7 +19,7 @@ void main() {
     _entityMock = RegisterEmailPasswordMock();
   });
   test(
-    'RegisterEmailPasswordUsecaseImpl should return right, when email and password is valid and the repository work normally',
+    'RegisterEmailPasswordUsecaseImpl should Return right, when email and password is valid and the repository work normally',
     () async {
       when(() => _mockRepo.registerWithEmailPassword(_entityMock.entityValid))
           .thenAnswer((_) async => Right(_entityMock.entityValid));
@@ -38,7 +38,7 @@ void main() {
   );
 
   test(
-    'RegisterEmailPasswordUsecaseImpl should return left, when email is invalid.',
+    'RegisterEmailPasswordUsecaseImpl should return Left, when email is invalid.',
     () async {
       final response = await _usecase(_entityMock.entityInvalidEmail);
 
@@ -49,7 +49,7 @@ void main() {
   );
 
   test(
-    'RegisterEmailPasswordUsecaseImpl should return left, when password is invalid.',
+    'RegisterEmailPasswordUsecaseImpl should return Left, when password is invalid.',
     () async {
       final response = await _usecase(_entityMock.entityInvalidPassword);
 
