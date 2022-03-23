@@ -8,6 +8,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 
+import 'firebase_auth_exception_mock.dart';
+
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 
 class MockUserCredential extends Mock implements UserCredential {}
@@ -44,16 +46,15 @@ void main() async {
     () async {
       when(
         () => _firebaseAuthMock.createUserWithEmailAndPassword(
-          email: "testEmail",
-          password: "testPassword",
+          email: _entityMock.entityValid.email,
+          password: _entityMock.entityValid.password,
         ),
-      ).thenThrow(FirebaseAuthException(code: "email-already-in-use"));
-
-      /* thenAnswer(
-        (invocation) async =>
-            //TODO usar o Skip() para não detectar no flutter test run e diminuir a taxa de coverage
-            throw FirebaseAuthException(code: "email-already-in-use"),
-      ); */
+      ).thenThrow(
+        FirebaseAuthExceptionMock(
+          code: "email-already-in-use",
+          stackTrace: StackTrace.fromString(""),
+        ),
+      );
 
       expect(
           () async => await _service.registerFirebaseAuth(
@@ -61,6 +62,87 @@ void main() async {
               ),
           throwsA(
             isA<EmailAlreadyInUseException>(),
+          ));
+    },
+  );
+
+  test(
+    'FirebaseAuthServiceImpl, should throw a firebaseException with error code: invalid-email.',
+    () async {
+      when(
+        () => _firebaseAuthMock.createUserWithEmailAndPassword(
+          email: _entityMock.entityInvalidEmail.email,
+          password: _entityMock.entityInvalidEmail.password,
+        ),
+      ).thenThrow(
+        FirebaseAuthExceptionMock(
+          code: "invalid-email",
+          stackTrace: StackTrace.fromString(""),
+        ),
+      );
+
+      expect(
+          () async => await _service.registerFirebaseAuth(
+                RegisterEmailPasswordMapper.toMap(
+                  _entityMock.entityInvalidEmail,
+                ),
+              ),
+          throwsA(
+            isA<InvalidEmailException>(),
+          ));
+    },
+  );
+
+  test(
+    'FirebaseAuthServiceImpl, should throw a firebaseException with error code: operation-not-allowed.',
+    () async {
+      when(
+        () => _firebaseAuthMock.createUserWithEmailAndPassword(
+          email: _entityMock.entityValid.email,
+          password: _entityMock.entityValid.password,
+        ),
+      ).thenThrow(
+        FirebaseAuthExceptionMock(
+          code: "operation-not-allowed",
+          stackTrace: StackTrace.fromString(""),
+        ),
+      );
+
+      expect(
+          () async => await _service.registerFirebaseAuth(
+                RegisterEmailPasswordMapper.toMap(
+                  _entityMock.entityValid,
+                ),
+              ),
+          throwsA(
+            isA<EmailOrPasswordEnabledException>(),
+          ));
+    },
+  );
+
+  test(
+    'FirebaseAuthServiceImpl, should throw a firebaseException with error code: weak-password.',
+    () async {
+      when(
+        () => _firebaseAuthMock.createUserWithEmailAndPassword(
+          email: _entityMock.entityWeekPassword.email,
+          password: _entityMock.entityWeekPassword.password,
+        ),
+      ).thenThrow(
+        FirebaseAuthExceptionMock(
+          code: "weak-password",
+          stackTrace: StackTrace.fromString(""),
+        ),
+      );
+
+      expect(
+          () async => await _service.registerFirebaseAuth(
+                RegisterEmailPasswordMapper.toMap(
+                  _entityMock.entityWeekPassword,
+                ),
+              ),
+          throwsA(
+            isA<WeekPasswordException>(),
           ));
     },
   );
