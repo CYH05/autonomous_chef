@@ -17,7 +17,7 @@ class LoginEmailPasswordRepositoryImpl
       loginWithEmailPassword(LoginEmailPasswordEntity entity) async {
     try {
       final map = LoginEmailPasswordEntityMapper.toMap(entity);
-      _datasource.loginEmailPassword(map);
+      await _datasource.loginEmailPassword(map);
       return Right(entity);
     } on EmailOrPasswordInvalidException catch (_, stackTrace) {
       return Left(EmailOrPasswordInvalidException(stackTrace: stackTrace));

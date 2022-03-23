@@ -25,7 +25,7 @@ void main() {
     () async {
       when(() => _datasource.loginEmailPassword(
               LoginEmailPasswordEntityMapper.toMap(_entityMock.entityValid)))
-          .thenAnswer((_) async => true);
+          .thenAnswer((_) async => unit);
 
       final response =
           await _repository.loginWithEmailPassword(_entityMock.entityValid);
