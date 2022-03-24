@@ -14,26 +14,26 @@ class MockService extends Mock implements IFirebaseAuthService {}
 void main() {
   late MockService _service;
   late IRegisterEmailPasswordDatasource _datasource;
-  late ExceptionMock _exceptionMock;
-  late RegisterEmailPasswordMock _entityMock;
+  late ExceptionMock _exception;
+  late RegisterEmailPasswordMock _entity;
 
   setUp(() {
     _service = MockService();
     _datasource = RegisterEmailPasswordDatasourceImpl(service: _service);
-    _exceptionMock = ExceptionMock();
-    _entityMock = RegisterEmailPasswordMock();
+    _exception = ExceptionMock();
+    _entity = RegisterEmailPasswordMock();
   });
   test(
     'RegisterEmailPasswordDatasourceImpl, should return RegisterEmailPasswordEntity when service work normally',
     () async {
       when(() => _service.registerFirebaseAuth(
-            RegisterEmailPasswordMapper.toMap(_entityMock.entityValid),
+            RegisterEmailPasswordMapper.toMap(_entity.entityValid),
           )).thenAnswer(
         (_) async => unit,
       );
 
       final result = await _datasource.registerEmailPassword(
-        RegisterEmailPasswordMapper.toMap(_entityMock.entityValid),
+        RegisterEmailPasswordMapper.toMap(_entity.entityValid),
       );
 
       expect(result, isA<Unit>());
@@ -44,12 +44,12 @@ void main() {
     'RegisterEmailPasswordDatasourceImpl, should throw EmailAlreadyInUseException when email address is already in our database',
     () async {
       when(() => _service.registerFirebaseAuth(
-            RegisterEmailPasswordMapper.toMap(_entityMock.entityValid),
-          )).thenThrow(_exceptionMock.emailAlreadyInUseException);
+            RegisterEmailPasswordMapper.toMap(_entity.entityValid),
+          )).thenThrow(_exception.emailAlreadyInUseException);
 
       expect(
         () async => await _datasource.registerEmailPassword(
-          RegisterEmailPasswordMapper.toMap(_entityMock.entityValid),
+          RegisterEmailPasswordMapper.toMap(_entity.entityValid),
         ),
         throwsA(
           isA<EmailAlreadyInUseException>(),

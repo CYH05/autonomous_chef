@@ -8,34 +8,34 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 
-import 'firebase_auth_exception_mock.dart';
+import '../../../../../lib/app/core/helpers/firebase_auth_exception_mock.dart';
 
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 
 class MockUserCredential extends Mock implements UserCredential {}
 
 void main() async {
-  late MockFirebaseAuth _firebaseAuthMock;
-  late MockUserCredential _userCredentialMock;
+  late MockFirebaseAuth _firebaseAuth;
+  late UserCredential _userCredential;
   late FirebaseAuthServiceImpl _service;
-  late RegisterEmailPasswordMock _entityMock;
+  late RegisterEmailPasswordMock _entity;
 
   setUp(() {
-    _firebaseAuthMock = MockFirebaseAuth();
-    _userCredentialMock = MockUserCredential();
-    _service = FirebaseAuthServiceImpl(firebaseAuth: _firebaseAuthMock);
-    _entityMock = RegisterEmailPasswordMock();
+    _firebaseAuth = MockFirebaseAuth();
+    _userCredential = MockUserCredential();
+    _service = FirebaseAuthServiceImpl(firebaseAuth: _firebaseAuth);
+    _entity = RegisterEmailPasswordMock();
   });
   test(
     'FirebaseAuthServiceImpl, should return void when firebaseAuth work normally.',
     () async {
-      when(() => _firebaseAuthMock.createUserWithEmailAndPassword(
-            email: _entityMock.entityValid.email,
-            password: _entityMock.entityValid.password,
-          )).thenAnswer((invocation) async => _userCredentialMock);
+      when(() => _firebaseAuth.createUserWithEmailAndPassword(
+            email: _entity.entityValid.email,
+            password: _entity.entityValid.password,
+          )).thenAnswer((invocation) async => _userCredential);
 
       final result = await _service.registerFirebaseAuth(
-        RegisterEmailPasswordMapper.toMap(_entityMock.entityValid),
+        RegisterEmailPasswordMapper.toMap(_entity.entityValid),
       );
       expect(result, isA<Unit>());
     },
@@ -45,9 +45,9 @@ void main() async {
     'FirebaseAuthServiceImpl, should throw a firebaseException with error code: email-already-in-use.',
     () async {
       when(
-        () => _firebaseAuthMock.createUserWithEmailAndPassword(
-          email: _entityMock.entityValid.email,
-          password: _entityMock.entityValid.password,
+        () => _firebaseAuth.createUserWithEmailAndPassword(
+          email: _entity.entityValid.email,
+          password: _entity.entityValid.password,
         ),
       ).thenThrow(
         FirebaseAuthExceptionMock(
@@ -58,7 +58,7 @@ void main() async {
 
       expect(
           () async => await _service.registerFirebaseAuth(
-                RegisterEmailPasswordMapper.toMap(_entityMock.entityValid),
+                RegisterEmailPasswordMapper.toMap(_entity.entityValid),
               ),
           throwsA(
             isA<EmailAlreadyInUseException>(),
@@ -70,9 +70,9 @@ void main() async {
     'FirebaseAuthServiceImpl, should throw a firebaseException with error code: invalid-email.',
     () async {
       when(
-        () => _firebaseAuthMock.createUserWithEmailAndPassword(
-          email: _entityMock.entityInvalidEmail.email,
-          password: _entityMock.entityInvalidEmail.password,
+        () => _firebaseAuth.createUserWithEmailAndPassword(
+          email: _entity.entityInvalidEmail.email,
+          password: _entity.entityInvalidEmail.password,
         ),
       ).thenThrow(
         FirebaseAuthExceptionMock(
@@ -84,7 +84,7 @@ void main() async {
       expect(
           () async => await _service.registerFirebaseAuth(
                 RegisterEmailPasswordMapper.toMap(
-                  _entityMock.entityInvalidEmail,
+                  _entity.entityInvalidEmail,
                 ),
               ),
           throwsA(
@@ -97,9 +97,9 @@ void main() async {
     'FirebaseAuthServiceImpl, should throw a firebaseException with error code: operation-not-allowed.',
     () async {
       when(
-        () => _firebaseAuthMock.createUserWithEmailAndPassword(
-          email: _entityMock.entityValid.email,
-          password: _entityMock.entityValid.password,
+        () => _firebaseAuth.createUserWithEmailAndPassword(
+          email: _entity.entityValid.email,
+          password: _entity.entityValid.password,
         ),
       ).thenThrow(
         FirebaseAuthExceptionMock(
@@ -111,7 +111,7 @@ void main() async {
       expect(
           () async => await _service.registerFirebaseAuth(
                 RegisterEmailPasswordMapper.toMap(
-                  _entityMock.entityValid,
+                  _entity.entityValid,
                 ),
               ),
           throwsA(
@@ -124,9 +124,9 @@ void main() async {
     'FirebaseAuthServiceImpl, should throw a firebaseException with error code: weak-password.',
     () async {
       when(
-        () => _firebaseAuthMock.createUserWithEmailAndPassword(
-          email: _entityMock.entityWeekPassword.email,
-          password: _entityMock.entityWeekPassword.password,
+        () => _firebaseAuth.createUserWithEmailAndPassword(
+          email: _entity.entityWeekPassword.email,
+          password: _entity.entityWeekPassword.password,
         ),
       ).thenThrow(
         FirebaseAuthExceptionMock(
@@ -138,7 +138,7 @@ void main() async {
       expect(
           () async => await _service.registerFirebaseAuth(
                 RegisterEmailPasswordMapper.toMap(
-                  _entityMock.entityWeekPassword,
+                  _entity.entityWeekPassword,
                 ),
               ),
           throwsA(

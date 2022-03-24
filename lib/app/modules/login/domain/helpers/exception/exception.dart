@@ -18,3 +18,21 @@ class EmailOrPasswordInvalidException extends ILoginException {
           stackTrace: stackTrace,
         );
 }
+
+class UserNotFoundException extends ILoginException {
+  UserNotFoundException({
+    required StackTrace stackTrace,
+  }) : super(
+          message: 'Usuário com este e-mail não encontrado.',
+          stackTrace: stackTrace,
+        );
+}
+
+class UserDisabledException extends ILoginException {
+  UserDisabledException({
+    required StackTrace stackTrace,
+  }) : super(
+          message: 'Usuário desabilidado.',
+          stackTrace: stackTrace,
+        );
+}
