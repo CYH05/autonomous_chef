@@ -1,30 +1,24 @@
 import 'package:autonomous_chef/app/modules/register/component/custom_text_form_field.dart';
-import 'package:autonomous_chef/app/modules/register/register_controller.dart';
 import 'package:autonomous_chef/app/modules/register/validation_func/email.dart';
 import 'package:autonomous_chef/app/modules/register/validation_func/password.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
 
-import '../register/domain/helpers/error/error.dart';
-import '../register/domain/helpers/validator/validator.dart';
-
+import 'login_controller.dart';
 
 class LoginPage extends StatefulWidget {
   final String title;
-  const LoginPage({Key? key, this.title = 'RegisterPage'}) : super(key: key);
+  const LoginPage({Key? key, this.title = 'LoginPage'}) : super(key: key);
   @override
   LoginPageState createState() => LoginPageState();
 }
 
 class LoginPageState extends State<LoginPage> {
-  late RegisterController _controller;
+  late LoginController _controller;
 
   @override
   void initState() {
-    _controller = RegisterController(
-      emailController: TextEditingController(),
-      passwordController: TextEditingController(),
-      formKey: GlobalKey<FormState>(),
+    _controller = LoginController(
       store: Modular.get(),
     );
     super.initState();
@@ -39,6 +33,7 @@ class LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              //TODO trocar a função pela classe stateless que vier da branch %5
               Padding(
                 padding: const EdgeInsets.all(12),
                 child: customTextFormField(
@@ -55,28 +50,10 @@ class LoginPageState extends State<LoginPage> {
                   validator: checkPassword,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(12),
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    label: Text("Confirme sua senha"),
-                  ),
-                  validator: (confirmPassword) {
-                    if (!comparePassword(
-                          _controller.passwordController.text,
-                          confirmPassword!,
-                        ) ||
-                        confirmPassword == "") {
-                      const error = PasswordCompararissonnError();
-                      return error.message;
-                    }
-                    return null;
-                  },
-                ),
-              ),
+
               ElevatedButton(
                 onPressed: () async =>
-                    await _controller.callRegisterWithEmailPassword(),
+                    await _controller.callLoginWithEmailPassword(),
                 child: const Text("Enviar"),
               ),
             ],
