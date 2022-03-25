@@ -17,7 +17,7 @@ void main() {
   setUp(() {
     _entityMock = LoginEmailPasswordEntityMock();
     _service = ServiceMock();
-    _datasource = LoginEmailPassworddatasourceImpl(service: _service);
+    _datasource = LoginEmailPasswordDatasourceImpl(service: _service);
   });
   test(
     'LoginEmailPasswordDatasourceImpl should return true when service work normally',

@@ -2,11 +2,11 @@ import 'package:autonomous_chef/app/modules/login/external/service/login_email_p
 import 'package:autonomous_chef/app/modules/login/infra/datasource/login_email_password_datasource_interface.dart';
 import 'package:fpdart/fpdart.dart';
 
-class LoginEmailPassworddatasourceImpl
+class LoginEmailPasswordDatasourceImpl
     implements ILoginEmailPasswordDatasource {
   final ILoginEmailPasswordService _service;
 
-  const LoginEmailPassworddatasourceImpl({required service})
+  const LoginEmailPasswordDatasourceImpl({required service})
       : _service = service;
 
   @override
