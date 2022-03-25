@@ -19,6 +19,7 @@ void main() {
   setUp(() {
     _repository = RepositoryMock();
     _entityMock = LoginEmailPasswordEntityMock();
+    // TODO quando a branch #5 for aceita utilizar o mock de erro especifico
     _errorMock = ErrorMock();
     _usecase = LoginEmailPasswordUsecaseImpl(_repository);
   });

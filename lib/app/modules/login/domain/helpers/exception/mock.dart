@@ -1,6 +1,10 @@
+import 'package:mocktail/mocktail.dart';
+
 import 'exception.dart';
 
-class ExceptionMock {
-  final emailOrPasswordInvalidException =
-      EmailOrPasswordInvalidException(stackTrace: StackTrace.fromString(""));
-}
+class EmailOrPasswordInvalidExceptionMock extends Mock
+    implements EmailOrPasswordInvalidException {}
+
+class UserNotFoundExceptionMock extends Mock implements UserNotFoundException {}
+
+class UserDisabledExceptionMock extends Mock implements UserDisabledException {}
