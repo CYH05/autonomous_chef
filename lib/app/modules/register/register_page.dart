@@ -20,12 +20,7 @@ class RegisterPageState extends State<RegisterPage> {
 
   @override
   void initState() {
-    _controller = RegisterController(
-      emailController: TextEditingController(),
-      passwordController: TextEditingController(),
-      formKey: GlobalKey<FormState>(),
-      store: Modular.get(),
-    );
+    _controller = RegisterController(store: Modular.get());
     super.initState();
   }
 
@@ -40,7 +35,7 @@ class RegisterPageState extends State<RegisterPage> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(12),
-                child: customTextFormField(
+                child: CustomTextFormField(
                   controller: _controller.emailController,
                   label: "Email",
                   validator: checkEmail,
@@ -48,7 +43,7 @@ class RegisterPageState extends State<RegisterPage> {
               ),
               Padding(
                 padding: const EdgeInsets.all(12),
-                child: customTextFormField(
+                child: CustomTextFormField(
                   controller: _controller.passwordController,
                   label: "Senha",
                   validator: checkPassword,
