@@ -1,19 +1,13 @@
+import 'package:mocktail/mocktail.dart';
+
 import 'exception.dart';
 
-class ExceptionMock {
-  final emailAlreadyInUseException = EmailAlreadyInUseException(
-    stackTrace: StackTrace.fromString(""),
-  );
+class EmailAlreadyInUseExceptionMock extends Mock
+    implements EmailAlreadyInUseException {}
 
-  final invalidEmailException = InvalidEmailException(
-    stackTrace: StackTrace.fromString(""),
-  );
+class InvalidEmailExceptionMock extends Mock implements InvalidEmailException {}
 
-  final emailOrPasswordEnabledException = EmailOrPasswordEnabledException(
-    stackTrace: StackTrace.fromString(""),
-  );
+class EmailOrPasswordEnabledExceptionMock extends Mock
+    implements EmailOrPasswordEnabledException {}
 
-  final weekPasswordException = WeekPasswordException(
-    stackTrace: StackTrace.fromString(""),
-  );
-}
+class WeekPasswordExceptionMock extends Mock implements WeekPasswordException {}

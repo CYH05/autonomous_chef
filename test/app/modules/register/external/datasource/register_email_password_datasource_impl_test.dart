@@ -14,13 +14,11 @@ class MockService extends Mock implements IFirebaseAuthService {}
 void main() {
   late MockService _service;
   late IRegisterEmailPasswordDatasource _datasource;
-  late ExceptionMock _exceptionMock;
   late RegisterEmailPasswordMock _entityMock;
 
   setUp(() {
     _service = MockService();
     _datasource = RegisterEmailPasswordDatasourceImpl(service: _service);
-    _exceptionMock = ExceptionMock();
     _entityMock = RegisterEmailPasswordMock();
   });
   test(
@@ -45,7 +43,7 @@ void main() {
     () async {
       when(() => _service.registerFirebaseAuth(
             RegisterEmailPasswordMapper.toMap(_entityMock.entityValid),
-          )).thenThrow(_exceptionMock.emailAlreadyInUseException);
+          )).thenThrow(EmailAlreadyInUseExceptionMock());
 
       expect(
         () async => await _datasource.registerEmailPassword(

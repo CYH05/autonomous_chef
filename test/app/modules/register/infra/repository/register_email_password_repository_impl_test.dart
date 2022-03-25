@@ -15,13 +15,11 @@ class MockDatasource extends Mock implements IRegisterEmailPasswordDatasource {}
 void main() {
   late MockDatasource _mockDatasource;
   late IRegisterEmailPasswordRepository _repository;
-  late ExceptionMock _exceptionMock;
   late RegisterEmailPasswordMock _entityMock;
 
   setUp(() {
     _mockDatasource = MockDatasource();
     _repository = RegisterEmailPasswordRepositoryImpl(_mockDatasource);
-    _exceptionMock = ExceptionMock();
     _entityMock = RegisterEmailPasswordMock();
   });
   test(
@@ -44,7 +42,7 @@ void main() {
     () async {
       when((() => _mockDatasource.registerEmailPassword(
               RegisterEmailPasswordMapper.toMap(_entityMock.entityValid))))
-          .thenThrow(_exceptionMock.emailAlreadyInUseException);
+          .thenThrow(EmailAlreadyInUseExceptionMock());
 
       final response =
           await _repository.registerWithEmailPassword(_entityMock.entityValid);
@@ -59,7 +57,7 @@ void main() {
     () async {
       when((() => _mockDatasource.registerEmailPassword(
               RegisterEmailPasswordMapper.toMap(_entityMock.entityValid))))
-          .thenThrow(_exceptionMock.emailOrPasswordEnabledException);
+          .thenThrow(EmailOrPasswordEnabledExceptionMock());
 
       final response =
           await _repository.registerWithEmailPassword(_entityMock.entityValid);
@@ -73,7 +71,7 @@ void main() {
     () async {
       when((() => _mockDatasource.registerEmailPassword(
               RegisterEmailPasswordMapper.toMap(_entityMock.entityValid))))
-          .thenThrow(_exceptionMock.invalidEmailException);
+          .thenThrow(InvalidEmailExceptionMock());
 
       final response =
           await _repository.registerWithEmailPassword(_entityMock.entityValid);
@@ -92,7 +90,7 @@ void main() {
                 _entityMock.entityWeekPassword,
               ),
             )),
-      ).thenThrow(_exceptionMock.weekPasswordException);
+      ).thenThrow(WeekPasswordExceptionMock());
 
       final response = await _repository.registerWithEmailPassword(
         _entityMock.entityWeekPassword,
