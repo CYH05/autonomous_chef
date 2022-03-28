@@ -18,9 +18,8 @@ class LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    _controller = LoginController(
-      store: Modular.get(),
-    );
+    _controller =
+        LoginController(formKey: GlobalKey<FormState>(), store: Modular.get());
     super.initState();
   }
 
