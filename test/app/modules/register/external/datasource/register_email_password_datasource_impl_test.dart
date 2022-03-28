@@ -4,7 +4,6 @@ import 'package:autonomous_chef/app/modules/register/domain/helpers/exception/mo
 import 'package:autonomous_chef/app/modules/register/external/datasource/register_email_password_datasource_impl.dart';
 import 'package:autonomous_chef/app/modules/register/external/services/firebase_auth_service_interface.dart';
 import 'package:autonomous_chef/app/modules/register/infra/datasource/register_email_password_datasource_interface.dart';
-import 'package:autonomous_chef/app/modules/register/infra/mappers/register_email_password_entity_mapper.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
@@ -24,15 +23,13 @@ void main() {
   test(
     'RegisterEmailPasswordDatasourceImpl, should return RegisterEmailPasswordEntity when service work normally',
     () async {
-      when(() => _service.registerFirebaseAuth(
-            RegisterEmailPasswordMapper.toMap(_entityMock.entityValid),
-          )).thenAnswer(
+      when(() => _service.registerFirebaseAuth(_entityMock.entityValid))
+          .thenAnswer(
         (_) async => unit,
       );
 
-      final result = await _datasource.registerEmailPassword(
-        RegisterEmailPasswordMapper.toMap(_entityMock.entityValid),
-      );
+      final result =
+          await _datasource.registerEmailPassword(_entityMock.entityValid);
 
       expect(result, isA<Unit>());
     },
@@ -41,14 +38,12 @@ void main() {
   test(
     'RegisterEmailPasswordDatasourceImpl, should throw EmailAlreadyInUseException when email address is already in our database',
     () async {
-      when(() => _service.registerFirebaseAuth(
-            RegisterEmailPasswordMapper.toMap(_entityMock.entityValid),
-          )).thenThrow(EmailAlreadyInUseExceptionMock());
+      when(() => _service.registerFirebaseAuth(_entityMock.entityValid))
+          .thenThrow(EmailAlreadyInUseExceptionMock());
 
       expect(
-        () async => await _datasource.registerEmailPassword(
-          RegisterEmailPasswordMapper.toMap(_entityMock.entityValid),
-        ),
+        () async =>
+            await _datasource.registerEmailPassword(_entityMock.entityValid),
         throwsA(
           isA<EmailAlreadyInUseException>(),
         ),

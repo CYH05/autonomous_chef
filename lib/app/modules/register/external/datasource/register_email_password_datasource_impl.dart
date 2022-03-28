@@ -2,6 +2,8 @@ import 'package:autonomous_chef/app/modules/register/external/services/firebase_
 import 'package:autonomous_chef/app/modules/register/infra/datasource/register_email_password_datasource_interface.dart';
 import 'package:fpdart/fpdart.dart';
 
+import '../../domain/entity/register_email_password_entity.dart';
+
 class RegisterEmailPasswordDatasourceImpl
     implements IRegisterEmailPasswordDatasource {
   final IFirebaseAuthService _service;
@@ -12,9 +14,9 @@ class RegisterEmailPasswordDatasourceImpl
 
   @override
   Future<Unit> registerEmailPassword(
-    Map<String, dynamic> registerEmailPasswordMap,
+    RegisterEmailPasswordEntity paramEntity,
   ) async {
-    await _service.registerFirebaseAuth(registerEmailPasswordMap);
+    await _service.registerFirebaseAuth(paramEntity);
 
     return unit;
   }
