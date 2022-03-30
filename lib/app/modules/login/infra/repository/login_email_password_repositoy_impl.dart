@@ -21,6 +21,10 @@ class LoginEmailPasswordRepositoryImpl
       return Right(entity);
     } on EmailOrPasswordInvalidException catch (_, stackTrace) {
       return Left(EmailOrPasswordInvalidException(stackTrace: stackTrace));
+    } on UserNotFoundException catch (_, stackTrace) {
+      return Left(UserNotFoundException(stackTrace: stackTrace));
+    } on UserDisabledException catch (_, stackTrace) {
+      return Left(UserDisabledException(stackTrace: stackTrace));
     }
     //TODO Consultar as possiveis exceptions
   }

@@ -1,7 +1,6 @@
+import 'package:autonomous_chef/app/modules/login/service/login_email_password_service_impl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
-import 'package:autonomous_chef/app/modules/register/service/firebase_auth_service_impl.dart';
 
 import 'domain/usecases/login_email_password/login_email_password_usecase_impl.dart';
 import 'external/datasource/login_email_password_datasource_impl.dart';
@@ -20,10 +19,11 @@ class LoginModule extends Module {
       (i) => LoginEmailPasswordRepositoryImpl(i()),
     ),
     Bind.lazySingleton(
-      (i) => LoginEmailPasswordDatasourceImpl(service: i()),
+      (i) => LoginEmailPasswordDatasourceImpl(
+          service: i.get<LoginEmailPasswordServiceImpl>()),
     ),
     Bind.lazySingleton(
-      (i) => FirebaseAuthServiceImpl(firebaseAuth: FirebaseAuth.instance),
+      (i) => LoginEmailPasswordServiceImpl(firebaseAuth: FirebaseAuth.instance),
     ),
     //TODO verificar qnd terminar o core, para reutilizar o firebaseAuth.instance em outros modulos.
   ];

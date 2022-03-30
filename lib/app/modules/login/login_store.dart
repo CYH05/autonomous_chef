@@ -29,8 +29,6 @@ class LoginStore extends NotifierStore<IAppException, bool> {
 
     handledResponse.fold(setError, update);
 
-    print("-----------------");
-
     setLoading(false);
   }
 }

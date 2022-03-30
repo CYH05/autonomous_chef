@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 class LoginController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final GlobalKey<FormState> formKey;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final LoginStore store;
 
-  LoginController({required this.formKey, required this.store});
+  LoginController({required this.store});
 
   Future<void> callLoginWithEmailPassword() async {
     if (formKey.currentState!.validate()) {

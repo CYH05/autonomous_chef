@@ -13,28 +13,36 @@ class LoginEmailPasswordServiceImpl implements ILoginEmailPasswordService {
   @override
   Future<Unit> loginEmailPassword(Map<String, dynamic> map) async {
     try {
-      _firebaseAuth.signInWithEmailAndPassword(
+      UserCredential credential =
+          await _firebaseAuth.signInWithEmailAndPassword(
         email: map['email'],
         password: map['password'],
       );
+
+      final user = credential.user;
     } on FirebaseAuthException catch (exception) {
+      final StackTrace st;
+      if (exception.stackTrace != null) {
+        st = exception.stackTrace!;
+      } else {
+        st = StackTrace.fromString("");
+      }
       if (exception.code == "user-disabled") {
         throw UserDisabledException(
-          stackTrace: exception.stackTrace!,
+          stackTrace: st,
         );
       }
 
       if (exception.code == "user-not-found") {
         throw UserNotFoundException(
-          stackTrace: exception.stackTrace!,
+          stackTrace: st,
         );
       }
 
       throw EmailOrPasswordInvalidException(
-        stackTrace: exception.stackTrace!,
+        stackTrace: st,
       );
     }
-
     return unit;
   }
 }
