@@ -1,12 +1,14 @@
-import 'package:autonomous_chef/app/modules/register/component/custom_text_form_field.dart';
 import 'package:autonomous_chef/app/modules/register/register_controller.dart';
+import 'package:autonomous_chef/app/modules/register/register_store.dart';
 import 'package:autonomous_chef/app/modules/register/validation_func/email.dart';
 import 'package:autonomous_chef/app/modules/register/validation_func/password.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_triple/flutter_triple.dart';
 
+import '../../core/components/custom_text_form_field.dart';
+import '../../core/helpers/validator/password_validator.dart';
 import 'domain/helpers/error/error.dart';
-import 'domain/helpers/validator/validator.dart';
 
 class RegisterPage extends StatefulWidget {
   final String title;
@@ -16,13 +18,8 @@ class RegisterPage extends StatefulWidget {
 }
 
 class RegisterPageState extends State<RegisterPage> {
-  late RegisterController _controller;
-
-  @override
-  void initState() {
-    _controller = RegisterController(store: Modular.get());
-    super.initState();
-  }
+  final RegisterController _controller = Modular.get();
+  final RegisterStore _store = Modular.get();
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +65,26 @@ class RegisterPageState extends State<RegisterPage> {
                   },
                 ),
               ),
-              ElevatedButton(
-                onPressed: () async =>
-                    await _controller.callRegisterWithEmailPassword(),
-                child: const Text("Enviar"),
+              ScopedBuilder(
+                store: _store,
+                onLoading: (_) => const CircularProgressIndicator(),
+                onError: (_, triple) => Column(
+                  children: [
+                    AlertDialog(
+                      title: Text(_store.error!.message),
+                    ),
+                    ElevatedButton(
+                      onPressed: () async =>
+                          await _controller.callRegisterWithEmailPassword(),
+                      child: const Text("Registar"),
+                    ),
+                  ],
+                ),
+                onState: (_, triple) => ElevatedButton(
+                  onPressed: () async =>
+                      await _controller.callRegisterWithEmailPassword(),
+                  child: const Text("Registrar"),
+                ),
               ),
             ],
           ),

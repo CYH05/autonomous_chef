@@ -3,7 +3,7 @@ import 'package:autonomous_chef/app/modules/login/domain/entities/mock.dart';
 import 'package:autonomous_chef/app/modules/login/domain/repository/login_email_password_repository_interface.dart';
 import 'package:autonomous_chef/app/modules/login/domain/usecases/login_email_password/login_email_password_usecase_impl.dart';
 import 'package:autonomous_chef/app/modules/login/domain/usecases/login_email_password/login_email_password_usecase_interface.dart';
-import 'package:autonomous_chef/app/modules/register/domain/helpers/error/mock.dart';
+import 'package:autonomous_chef/app/modules/register/domain/helpers/exception/mock.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
@@ -13,14 +13,11 @@ class RepositoryMock extends Mock implements ILoginEmailPasswordRepository {}
 void main() {
   late ILoginEmailPasswordRepository _repository;
   late LoginEmailPasswordEntityMock _entityMock;
-  late ErrorMock _errorMock;
   late ILoginEmailPasswordUsecase _usecase;
 
   setUp(() {
     _repository = RepositoryMock();
     _entityMock = LoginEmailPasswordEntityMock();
-    // TODO quando a branch #5 for aceita utilizar o mock de erro especifico
-    _errorMock = ErrorMock();
     _usecase = LoginEmailPasswordUsecaseImpl(_repository);
   });
   test(
@@ -41,7 +38,7 @@ void main() {
     "LoginEmailPasswordUsecaseImpl should return Left when email isn't valid.",
     () async {
       when(() => _repository.loginWithEmailPassword(_entityMock.entityInvalid))
-          .thenThrow(_errorMock.emailValidationError);
+          .thenThrow(InvalidEmailExceptionMock());
 
       final result = await _usecase(_entityMock.entityInvalid);
 

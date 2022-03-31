@@ -1,5 +1,6 @@
 import 'package:autonomous_chef/app/modules/register/domain/usecases/register_email_password/register_email_password_impl.dart';
 import 'package:autonomous_chef/app/modules/register/register_Page.dart';
+import 'package:autonomous_chef/app/modules/register/register_controller.dart';
 import 'package:autonomous_chef/app/modules/register/register_store.dart';
 import 'package:autonomous_chef/app/modules/register/service/firebase_auth_service_impl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,6 +12,7 @@ import 'infra/repository/register_email_password_repository_impl.dart';
 class RegisterModule extends Module {
   @override
   final List<Bind> binds = [
+    Bind.lazySingleton((i) => RegisterController(store: i())),
     Bind.lazySingleton((i) => RegisterStore(registerEmailPasswordUsecase: i())),
     Bind.lazySingleton(
       (i) => RegisterEmailPasswordUsecaseImpl(i()),

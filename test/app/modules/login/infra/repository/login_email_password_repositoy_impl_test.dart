@@ -45,10 +45,11 @@ void main() {
               LoginEmailPasswordEntityMapper.toMap(_entityMock.entityValid)))
           .thenThrow(UserDisabledExceptionMock());
 
-      expect(
-        () async => _repository.loginWithEmailPassword(_entityMock.entityValid),
-        throwsA(isA<UserDisabledException>()),
-      );
+      final response =
+          await _repository.loginWithEmailPassword(_entityMock.entityValid);
+
+      final result = response.fold(id, id);
+      expect(result, isA<UserDisabledException>());
     },
   );
 
@@ -59,10 +60,12 @@ void main() {
               LoginEmailPasswordEntityMapper.toMap(_entityMock.entityValid)))
           .thenThrow(UserNotFoundExceptionMock());
 
-      expect(
-        () async => _repository.loginWithEmailPassword(_entityMock.entityValid),
-        throwsA(isA<UserNotFoundException>()),
-      );
+      final response =
+          await _repository.loginWithEmailPassword(_entityMock.entityValid);
+
+      final result = response.fold(id, id);
+
+      expect(result, isA<UserNotFoundException>());
     },
   );
 }

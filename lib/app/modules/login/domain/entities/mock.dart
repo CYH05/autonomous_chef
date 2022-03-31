@@ -1,5 +1,5 @@
 import 'package:autonomous_chef/app/modules/login/domain/entities/login_email_password_entity.dart';
-import 'package:autonomous_chef/app/modules/register/domain/helpers/validator/mock.dart';
+import 'package:autonomous_chef/app/modules/register/domain/entity/entity_fields_mock.dart';
 
 final mock = EmailPasswordValidatorMock();
 

@@ -2,8 +2,10 @@ import 'package:autonomous_chef/app/modules/register/domain/helpers/error/error.
 import 'package:fpdart/fpdart.dart';
 
 import '../../../../../core/helpers/app_exception.dart';
+import '../../../../../core/helpers/validator/email_validator.dart';
+import '../../../../../core/helpers/validator/password_validator.dart';
 import '../../entity/register_email_password_entity.dart';
-import '../../helpers/validator/validator.dart';
+
 import '../../repository/register_email_password_repository_interface.dart';
 import 'register_email_password_interface.dart';
 
