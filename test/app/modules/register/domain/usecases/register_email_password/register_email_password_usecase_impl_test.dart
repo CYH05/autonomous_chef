@@ -11,20 +11,20 @@ class MockRepo extends Mock implements IRegisterEmailPasswordRepository {}
 void main() {
   late IRegisterEmailPasswordRepository _mockRepo;
   late RegisterEmailPasswordUsecaseImpl _usecase;
-  late RegisterEmailPasswordMock _entityMock;
+  late RegisterEmailPasswordMock _entity;
 
   setUp(() {
     _mockRepo = MockRepo();
     _usecase = RegisterEmailPasswordUsecaseImpl(_mockRepo);
-    _entityMock = RegisterEmailPasswordMock();
+    _entity = RegisterEmailPasswordMock();
   });
   test(
-    'RegisterEmailPasswordUsecaseImpl should return right, when email and password is valid and the repository work normally',
+    'RegisterEmailPasswordUsecaseImpl should Return right, when email and password is valid and the repository work normally',
     () async {
-      when(() => _mockRepo.registerWithEmailPassword(_entityMock.entityValid))
-          .thenAnswer((_) async => Right(_entityMock.entityValid));
+      when(() => _mockRepo.registerWithEmailPassword(_entity.entityValid))
+          .thenAnswer((_) async => Right(_entity.entityValid));
 
-      final response = await _usecase(_entityMock.entityValid);
+      final response = await _usecase(_entity.entityValid);
 
       /*
       De forma abreviada
@@ -38,9 +38,9 @@ void main() {
   );
 
   test(
-    'RegisterEmailPasswordUsecaseImpl should return left, when email is invalid.',
+    'RegisterEmailPasswordUsecaseImpl should return Left, when email is invalid.',
     () async {
-      final response = await _usecase(_entityMock.entityInvalidEmail);
+      final response = await _usecase(_entity.entityInvalidEmail);
 
       final result = response.fold(id, id);
 
@@ -49,9 +49,9 @@ void main() {
   );
 
   test(
-    'RegisterEmailPasswordUsecaseImpl should return left, when password is invalid.',
+    'RegisterEmailPasswordUsecaseImpl should return Left, when password is invalid.',
     () async {
-      final response = await _usecase(_entityMock.entityInvalidPassword);
+      final response = await _usecase(_entity.entityInvalidPassword);
 
       final result = response.fold(id, id);
 

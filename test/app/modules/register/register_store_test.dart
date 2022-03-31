@@ -14,23 +14,20 @@ class MockRegisterUsecase extends Mock
 class EntityFake extends Fake implements RegisterEmailPasswordEntity {}
 
 void main() {
-  late final RegisterStore store;
-  late final IRegisterEmailPasswordUsecase mockRegisterUsecase;
+  late RegisterStore store;
+  late IRegisterEmailPasswordUsecase mockRegisterUsecase;
 
-  setUpAll(() {
+  setUp(() {
     mockRegisterUsecase = MockRegisterUsecase();
     store = RegisterStore(registerEmailPasswordUsecase: mockRegisterUsecase);
     registerFallbackValue(EntityFake());
   });
+//TODO atualizar os inputs feitos a mão
   storeTest<RegisterStore>(
     "RegisterStore, should change your store status to tripleLoading, tripleState and tripleLoading in order.",
     build: () {
-      const registerEntity = RegisterEmailPasswordEntity(
-        email: "teste@teste.teste",
-        password: "Teste@123",
-      );
       when(() => mockRegisterUsecase(any()))
-          .thenAnswer((_) async => const Right(registerEntity));
+          .thenAnswer((_) async => Right(EntityFake()));
 
       return store;
     },
