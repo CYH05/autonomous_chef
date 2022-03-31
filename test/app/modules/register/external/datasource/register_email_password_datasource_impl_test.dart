@@ -4,7 +4,9 @@ import 'package:autonomous_chef/app/modules/register/domain/helpers/exception/mo
 import 'package:autonomous_chef/app/modules/register/external/datasource/register_email_password_datasource_impl.dart';
 import 'package:autonomous_chef/app/modules/register/external/services/firebase_auth_service_interface.dart';
 import 'package:autonomous_chef/app/modules/register/infra/datasource/register_email_password_datasource_interface.dart';
+
 import 'package:autonomous_chef/app/modules/register/infra/mapper/register_email_password_entity_mapper.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
@@ -14,14 +16,22 @@ class MockService extends Mock implements IFirebaseAuthService {}
 void main() {
   late MockService _service;
   late IRegisterEmailPasswordDatasource _datasource;
+
+  late RegisterEmailPasswordMock _entityMock;
+
   late ExceptionMock _exception;
   late RegisterEmailPasswordMock _entity;
+
 
   setUp(() {
     _service = MockService();
     _datasource = RegisterEmailPasswordDatasourceImpl(service: _service);
+
+    _entityMock = RegisterEmailPasswordMock();
+
     _exception = ExceptionMock();
     _entity = RegisterEmailPasswordMock();
+
   });
   test(
     'RegisterEmailPasswordDatasourceImpl, should return RegisterEmailPasswordEntity when service work normally',
