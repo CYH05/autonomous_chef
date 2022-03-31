@@ -1,6 +1,8 @@
 import 'package:autonomous_chef/app/modules/register/domain/entity/mock.dart';
 import 'package:autonomous_chef/app/modules/register/domain/helpers/exception/exception.dart';
+
 import 'package:autonomous_chef/app/modules/register/infra/mapper/register_email_password_entity_mapper.dart';
+
 import 'package:autonomous_chef/app/modules/register/service/firebase_auth_service_impl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -34,9 +36,9 @@ void main() async {
             password: _entity.entityValid.password,
           )).thenAnswer((invocation) async => _userCredential);
 
-      final result = await _service.registerFirebaseAuth(
-        RegisterEmailPasswordMapper.toMap(_entity.entityValid),
-      );
+      final result =
+          await _service.registerFirebaseAuth(_entityMock.entityValid);
+
       expect(result, isA<Unit>());
     },
   );
@@ -57,9 +59,9 @@ void main() async {
       );
 
       expect(
-          () async => await _service.registerFirebaseAuth(
-                RegisterEmailPasswordMapper.toMap(_entity.entityValid),
-              ),
+          () async =>
+              await _service.registerFirebaseAuth(_entityMock.entityValid),
+
           throwsA(
             isA<EmailAlreadyInUseException>(),
           ));

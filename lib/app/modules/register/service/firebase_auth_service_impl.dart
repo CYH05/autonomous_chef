@@ -1,3 +1,4 @@
+import 'package:autonomous_chef/app/modules/register/domain/entity/register_email_password_entity.dart';
 import 'package:autonomous_chef/app/modules/register/external/services/firebase_auth_service_interface.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
@@ -12,12 +13,12 @@ class FirebaseAuthServiceImpl implements IFirebaseAuthService {
 
   @override
   Future<Unit> registerFirebaseAuth(
-    Map<String, dynamic> map,
+    RegisterEmailPasswordEntity paramEntity,
   ) async {
     try {
       _firebaseAuth.createUserWithEmailAndPassword(
-        email: map['email'],
-        password: map['password'],
+        email: paramEntity.email,
+        password: paramEntity.password,
       );
     } on FirebaseAuthException catch (exception) {
       if (exception.code == "email-already-in-use") {
