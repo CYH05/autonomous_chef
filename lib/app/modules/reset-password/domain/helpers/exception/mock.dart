@@ -2,18 +2,18 @@ import 'package:mocktail/mocktail.dart';
 
 import 'exception.dart';
 
-class InvalidEmailMock extends Mock implements InvalidEmail {}
+class InvalidEmailExceptionMock extends Mock implements InvalidEmailException {}
 
-class MissingAndroidPackageNameMock extends Mock
-    implements MissingAndroidPackageName {}
+class MissingAndroidPackageNameExceptionMock extends Mock
+    implements MissingAndroidPackageNameException {}
 
-class MissingContinueURIMock extends Mock implements MissingContinueURI {}
+class MissingContinueURIExceptionMock extends Mock implements MissingContinueURIException {}
 
-class MissingIOSBundleIdMock extends Mock implements MissingIOSBundleId {}
+class MissingIOSBundleIdExceptionMock extends Mock implements MissingIOSBundleIdException {}
 
-class InvalidContinueURIMock extends Mock implements InvalidContinueURI {}
+class InvalidContinueURIExceptionMock extends Mock implements InvalidContinueURIException {}
 
-class UnauthorizedContinueURIMock extends Mock
-    implements UnauthorizedContinueURI {}
+class UnauthorizedContinueURIExceptionMock extends Mock
+    implements UnauthorizedContinueURIException {}
 
-class UserNotFoundMock extends Mock implements UserNotFound {}
+class UserNotFoundExceptionMock extends Mock implements UserNotFoundException {}
