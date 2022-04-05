@@ -21,27 +21,15 @@ class LoginEmailPasswordServiceImpl implements ILoginEmailPasswordService {
 
       final user = credential.user;
     } on FirebaseAuthException catch (exception) {
-      final StackTrace st;
-      if (exception.stackTrace != null) {
-        st = exception.stackTrace!;
-      } else {
-        st = StackTrace.fromString("");
-      }
       if (exception.code == "user-disabled") {
-        throw UserDisabledException(
-          stackTrace: st,
-        );
+        throw UserDisabledException();
       }
 
       if (exception.code == "user-not-found") {
-        throw UserNotFoundException(
-          stackTrace: st,
-        );
+        throw UserNotFoundException();
       }
 
-      throw EmailOrPasswordInvalidException(
-        stackTrace: st,
-      );
+      throw EmailOrPasswordInvalidException();
     }
     return unit;
   }

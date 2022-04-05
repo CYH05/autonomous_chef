@@ -7,7 +7,6 @@ class RegisterController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final RegisterStore store;
 
-  //TODO confirmar se é quebra de padrão tornar este construtor não constatne
   RegisterController({
     required this.store,
   });

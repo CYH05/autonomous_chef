@@ -4,11 +4,11 @@ class IAppException implements Exception {
 }
 
 class AppException extends IAppException {
-  final StackTrace stackTrace;
+  final StackTrace? stackTrace;
 
   const AppException({
     required String message,
-    required this.stackTrace,
+    this.stackTrace,
   }) : super(message: message);
 }
 

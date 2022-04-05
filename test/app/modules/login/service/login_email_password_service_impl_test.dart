@@ -1,4 +1,3 @@
-import 'package:autonomous_chef/app/core/helpers/firebase_auth_exception_mock.dart';
 import 'package:autonomous_chef/app/modules/login/domain/entities/mock.dart';
 import 'package:autonomous_chef/app/modules/login/domain/helpers/exception/exception.dart';
 import 'package:autonomous_chef/app/modules/login/external/service/login_email_password_serivce_interface.dart';
@@ -48,10 +47,7 @@ void main() {
             email: _entity.entityValid.email,
             password: _entity.entityValid.password,
           )).thenThrow(
-        FirebaseAuthExceptionMock(
-          code: "user-disabled",
-          stackTrace: StackTrace.fromString(""),
-        ),
+        FirebaseAuthException(code: "user-disabled"),
       );
 
       expect(
@@ -69,10 +65,7 @@ void main() {
             email: _entity.entityValid.email,
             password: _entity.entityValid.password,
           )).thenThrow(
-        FirebaseAuthExceptionMock(
-          code: "user-not-found",
-          stackTrace: StackTrace.fromString(""),
-        ),
+        FirebaseAuthException(code: "user-not-found"),
       );
 
       expect(
@@ -90,10 +83,7 @@ void main() {
             email: _entity.entityValid.email,
             password: _entity.entityValid.password,
           )).thenThrow(
-        FirebaseAuthExceptionMock(
-          code: "wrong-password",
-          stackTrace: StackTrace.fromString(""),
-        ),
+        FirebaseAuthException(code: "wrong-password"),
       );
 
       expect(

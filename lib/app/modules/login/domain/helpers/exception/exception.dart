@@ -3,7 +3,7 @@ import 'package:autonomous_chef/app/core/helpers/app_exception.dart';
 class ILoginException extends AppException {
   const ILoginException({
     required String message,
-    required StackTrace stackTrace,
+    StackTrace? stackTrace,
   }) : super(
           message: message,
           stackTrace: stackTrace,
@@ -12,7 +12,7 @@ class ILoginException extends AppException {
 
 class EmailOrPasswordInvalidException extends ILoginException {
   EmailOrPasswordInvalidException({
-    required StackTrace stackTrace,
+    StackTrace? stackTrace,
   }) : super(
           message: 'Endereço de email ou senha inválidos.',
           stackTrace: stackTrace,
@@ -21,7 +21,7 @@ class EmailOrPasswordInvalidException extends ILoginException {
 
 class UserNotFoundException extends ILoginException {
   UserNotFoundException({
-    required StackTrace stackTrace,
+     StackTrace? stackTrace,
   }) : super(
           message: 'Usuário com este e-mail não encontrado.',
           stackTrace: stackTrace,
@@ -30,7 +30,7 @@ class UserNotFoundException extends ILoginException {
 
 class UserDisabledException extends ILoginException {
   UserDisabledException({
-    required StackTrace stackTrace,
+    StackTrace? stackTrace,
   }) : super(
           message: 'Usuário desabilidado.',
           stackTrace: stackTrace,

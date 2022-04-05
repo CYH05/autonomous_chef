@@ -1,4 +1,5 @@
 import 'package:autonomous_chef/app/modules/register/domain/entity/register_email_password_entity.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
 import '../../core/helpers/app_exception.dart';
@@ -38,5 +39,9 @@ class RegisterStore extends NotifierStore<IAppException, bool> {
     handledResponse.fold(setError, update);
 
     setLoading(false);
+    
+    if (handledResponse.isRight()) {
+      Modular.to.navigate('/home');
+    }
   }
 }

@@ -26,6 +26,5 @@ class LoginEmailPasswordRepositoryImpl
     } on UserDisabledException catch (_, stackTrace) {
       return Left(UserDisabledException(stackTrace: stackTrace));
     }
-    //TODO Consultar as possiveis exceptions
   }
 }

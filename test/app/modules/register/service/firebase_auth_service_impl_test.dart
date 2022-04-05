@@ -1,16 +1,12 @@
 import 'package:autonomous_chef/app/modules/register/domain/entity/mock.dart';
 import 'package:autonomous_chef/app/modules/register/domain/helpers/exception/exception.dart';
 
-import 'package:autonomous_chef/app/modules/register/infra/mapper/register_email_password_entity_mapper.dart';
-
 import 'package:autonomous_chef/app/modules/register/service/firebase_auth_service_impl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
-
-import '../../../../../lib/app/core/helpers/firebase_auth_exception_mock.dart';
 
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 
@@ -36,8 +32,7 @@ void main() async {
             password: _entity.entityValid.password,
           )).thenAnswer((invocation) async => _userCredential);
 
-      final result =
-          await _service.registerFirebaseAuth(_entityMock.entityValid);
+      final result = await _service.registerFirebaseAuth(_entity.entityValid);
 
       expect(result, isA<Unit>());
     },
@@ -52,16 +47,11 @@ void main() async {
           password: _entity.entityValid.password,
         ),
       ).thenThrow(
-        FirebaseAuthExceptionMock(
-          code: "email-already-in-use",
-          stackTrace: StackTrace.fromString(""),
-        ),
+        FirebaseAuthException(code: "email-already-in-use"),
       );
 
       expect(
-          () async =>
-              await _service.registerFirebaseAuth(_entityMock.entityValid),
-
+          () async => await _service.registerFirebaseAuth(_entity.entityValid),
           throwsA(
             isA<EmailAlreadyInUseException>(),
           ));
@@ -77,18 +67,12 @@ void main() async {
           password: _entity.entityInvalidEmail.password,
         ),
       ).thenThrow(
-        FirebaseAuthExceptionMock(
-          code: "invalid-email",
-          stackTrace: StackTrace.fromString(""),
-        ),
+        FirebaseAuthException(code: "invalid-email"),
       );
 
       expect(
-          () async => await _service.registerFirebaseAuth(
-                RegisterEmailPasswordMapper.toMap(
-                  _entity.entityInvalidEmail,
-                ),
-              ),
+          () async =>
+              await _service.registerFirebaseAuth(_entity.entityInvalidEmail),
           throwsA(
             isA<InvalidEmailException>(),
           ));
@@ -104,18 +88,11 @@ void main() async {
           password: _entity.entityValid.password,
         ),
       ).thenThrow(
-        FirebaseAuthExceptionMock(
-          code: "operation-not-allowed",
-          stackTrace: StackTrace.fromString(""),
-        ),
+        FirebaseAuthException(code: "operation-not-allowed"),
       );
 
       expect(
-          () async => await _service.registerFirebaseAuth(
-                RegisterEmailPasswordMapper.toMap(
-                  _entity.entityValid,
-                ),
-              ),
+          () async => await _service.registerFirebaseAuth(_entity.entityValid),
           throwsA(
             isA<EmailOrPasswordEnabledException>(),
           ));
@@ -131,18 +108,12 @@ void main() async {
           password: _entity.entityWeekPassword.password,
         ),
       ).thenThrow(
-        FirebaseAuthExceptionMock(
-          code: "weak-password",
-          stackTrace: StackTrace.fromString(""),
-        ),
+        FirebaseAuthException(code: "weak-password"),
       );
 
       expect(
-          () async => await _service.registerFirebaseAuth(
-                RegisterEmailPasswordMapper.toMap(
-                  _entity.entityWeekPassword,
-                ),
-              ),
+          () async =>
+              await _service.registerFirebaseAuth(_entity.entityWeekPassword),
           throwsA(
             isA<WeekPasswordException>(),
           ));

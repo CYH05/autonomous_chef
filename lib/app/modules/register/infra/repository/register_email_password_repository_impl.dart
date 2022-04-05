@@ -1,8 +1,6 @@
 import 'package:autonomous_chef/app/modules/register/domain/entity/register_email_password_entity.dart';
 import 'package:autonomous_chef/app/modules/register/domain/helpers/exception/exception.dart';
 
-import 'package:autonomous_chef/app/modules/register/infra/mapper/register_email_password_entity_mapper.dart';
-
 import 'package:fpdart/fpdart.dart';
 
 import '../../../../core/helpers/app_exception.dart';
@@ -26,27 +24,19 @@ class RegisterEmailPasswordRepositoryImpl
       return Right(entity);
     } on EmailAlreadyInUseException catch (_, stackTrace) {
       return Left(
-        EmailAlreadyInUseException(
-          stackTrace: stackTrace,
-        ),
+        EmailAlreadyInUseException(stackTrace: stackTrace),
       );
     } on EmailOrPasswordEnabledException catch (_, stackTrace) {
       return Left(
-        EmailOrPasswordEnabledException(
-          stackTrace: stackTrace,
-        ),
+        EmailOrPasswordEnabledException(stackTrace: stackTrace),
       );
     } on InvalidEmailException catch (_, stackTrace) {
       return Left(
-        InvalidEmailException(
-          stackTrace: stackTrace,
-        ),
+        InvalidEmailException(stackTrace: stackTrace),
       );
     } on WeekPasswordException catch (_, stackTrace) {
       return Left(
-        WeekPasswordException(
-          stackTrace: stackTrace,
-        ),
+        WeekPasswordException(stackTrace: stackTrace),
       );
     }
   }

@@ -1,5 +1,6 @@
-import 'package:autonomous_chef/app/modules/register/domain/helpers/validator/mock.dart';
-import 'package:autonomous_chef/app/modules/register/domain/helpers/validator/validator.dart';
+import 'package:autonomous_chef/app/core/helpers/validator/email_validator.dart';
+import 'package:autonomous_chef/app/core/helpers/validator/password_validator.dart';
+import 'package:autonomous_chef/app/modules/register/domain/entity/entity_fields_mock.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
