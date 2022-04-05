@@ -25,8 +25,7 @@ void main() {
   test(
     'LoginEmailPasswordRepositoyImpl should return Right when datasource work without any exceptions',
     () async {
-      when(() => _datasource.loginEmailPassword(
-              LoginEmailPasswordEntityMapper.toMap(_entityMock.entityValid)))
+      when(() => _datasource.loginEmailPassword(_entityMock.entityValid))
           .thenAnswer((_) async => unit);
 
       final response =
@@ -41,8 +40,7 @@ void main() {
   test(
     'LoginEmailPasswordRepositoyImpl should throw UserDisabledException when user is disabled in console',
     () async {
-      when(() => _datasource.loginEmailPassword(
-              LoginEmailPasswordEntityMapper.toMap(_entityMock.entityValid)))
+      when(() => _datasource.loginEmailPassword(_entityMock.entityValid))
           .thenThrow(UserDisabledExceptionMock());
 
       final response =
@@ -56,8 +54,7 @@ void main() {
   test(
     'LoginEmailPasswordRepositoyImpl should throw UserNotFoundException when email is not registered.',
     () async {
-      when(() => _datasource.loginEmailPassword(
-              LoginEmailPasswordEntityMapper.toMap(_entityMock.entityValid)))
+      when(() => _datasource.loginEmailPassword(_entityMock.entityValid))
           .thenThrow(UserNotFoundExceptionMock());
 
       final response =

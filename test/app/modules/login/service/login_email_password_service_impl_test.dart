@@ -33,8 +33,7 @@ void main() {
             password: _entity.entityValid.password,
           )).thenAnswer((invocation) async => _userCredential);
 
-      final result = await _service.loginEmailPassword(
-          LoginEmailPasswordEntityMapper.toMap(_entity.entityValid));
+      final result = await _service.loginEmailPassword(_entity.entityValid);
 
       expect(result, isA<Unit>());
     },
@@ -51,8 +50,7 @@ void main() {
       );
 
       expect(
-        () async => await _service.loginEmailPassword(
-            LoginEmailPasswordEntityMapper.toMap(_entity.entityValid)),
+        () async => await _service.loginEmailPassword(_entity.entityValid),
         throwsA(isA<UserDisabledException>()),
       );
     },
@@ -69,8 +67,7 @@ void main() {
       );
 
       expect(
-        () async => await _service.loginEmailPassword(
-            LoginEmailPasswordEntityMapper.toMap(_entity.entityValid)),
+        () async => await _service.loginEmailPassword(_entity.entityValid),
         throwsA(isA<UserNotFoundException>()),
       );
     },
@@ -87,8 +84,7 @@ void main() {
       );
 
       expect(
-        () async => await _service.loginEmailPassword(
-            LoginEmailPasswordEntityMapper.toMap(_entity.entityValid)),
+        () async => await _service.loginEmailPassword(_entity.entityValid),
         throwsA(isA<EmailOrPasswordInvalidException>()),
       );
     },
