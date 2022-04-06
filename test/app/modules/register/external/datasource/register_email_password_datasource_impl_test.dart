@@ -2,7 +2,7 @@ import 'package:autonomous_chef/app/modules/register/domain/entity/mock.dart';
 import 'package:autonomous_chef/app/modules/register/domain/helpers/exception/exception.dart';
 import 'package:autonomous_chef/app/modules/register/domain/helpers/exception/mock.dart';
 import 'package:autonomous_chef/app/modules/register/external/datasource/register_email_password_datasource_impl.dart';
-import 'package:autonomous_chef/app/modules/register/external/services/firebase_auth_service_interface.dart';
+import 'package:autonomous_chef/app/modules/register/external/service/firebase_auth_service_interface.dart';
 import 'package:autonomous_chef/app/modules/register/infra/datasource/register_email_password_datasource_interface.dart';
 
 import 'package:flutter_test/flutter_test.dart';
