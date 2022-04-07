@@ -1,3 +1,4 @@
+import 'package:autonomous_chef/app/modules/register/domain/entity/mock.dart';
 import 'package:autonomous_chef/app/modules/register/domain/entity/register_email_password_entity.dart';
 import 'package:autonomous_chef/app/modules/register/domain/usecases/register_email_password/register_email_password_interface.dart';
 
@@ -16,13 +17,14 @@ class EntityFake extends Fake implements RegisterEmailPasswordEntity {}
 void main() {
   late RegisterStore store;
   late IRegisterEmailPasswordUsecase mockRegisterUsecase;
+  late RegisterEmailPasswordMock _entity;
 
   setUp(() {
     mockRegisterUsecase = MockRegisterUsecase();
     store = RegisterStore(registerEmailPasswordUsecase: mockRegisterUsecase);
+    _entity = RegisterEmailPasswordMock();
     registerFallbackValue(EntityFake());
   });
-//TODO atualizar os inputs feitos a mão
   storeTest<RegisterStore>(
     "RegisterStore, should change your store status to tripleLoading, tripleState and tripleLoading in order.",
     build: () {
@@ -32,8 +34,8 @@ void main() {
       return store;
     },
     act: (_) async => await store.registerEmailPassword(
-      email: 'teste@teste.teste',
-      password: 'Teste@123',
+      email: _entity.entityValid.email,
+      password: _entity.entityValid.password,
     ),
     expect: () => [tripleLoading, tripleState, tripleLoading],
   );

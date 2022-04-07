@@ -2,10 +2,10 @@ import 'package:autonomous_chef/app/modules/login/domain/entities/login_email_pa
 import 'package:autonomous_chef/app/modules/login/domain/repository/login_email_password_repository_interface.dart';
 import 'package:autonomous_chef/app/modules/login/domain/usecases/login_email_password/login_email_password_usecase_interface.dart';
 import 'package:autonomous_chef/app/modules/register/domain/helpers/error/error.dart';
-import 'package:autonomous_chef/app/modules/register/domain/helpers/validator/validator.dart';
 import 'package:fpdart/fpdart.dart';
 
 import '../../../../../core/helpers/app_exception.dart';
+import '../../../../../core/helpers/validator/email_validator.dart';
 
 class LoginEmailPasswordUsecaseImpl implements ILoginEmailPasswordUsecase {
   final ILoginEmailPasswordRepository _repository;

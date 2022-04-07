@@ -1,5 +1,5 @@
+import '../../../core/helpers/validator/email_validator.dart';
 import '../domain/helpers/error/error.dart';
-import '../domain/helpers/validator/validator.dart';
 
 String? checkPassword(String? password) {
   if (!validateEmail(password!)) {

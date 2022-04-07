@@ -22,12 +22,11 @@ void main() {
   test(
     'LoginEmailPasswordDatasourceImpl should return true when service work normally',
     () async {
-      final map = LoginEmailPasswordEntityMapper.toMap(_entityMock.entityValid);
 
-      when(() => _service.loginEmailPassword(map))
+      when(() => _service.loginEmailPassword(_entityMock.entityValid))
           .thenAnswer((_) async => unit);
 
-      final result = await _datasource.loginEmailPassword(map);
+      final result = await _datasource.loginEmailPassword(_entityMock.entityValid);
 
       expect(result, equals(unit));
     },

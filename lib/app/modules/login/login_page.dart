@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
-import '../register/component/custom_text_form_field.dart';
+import '../../core/components/custom_text_form_field.dart';
 import '../register/validation_func/email.dart';
 import '../register/validation_func/password.dart';
 
@@ -16,14 +16,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  late LoginController _controller;
-  final _store = Modular.get<LoginStore>();
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = LoginController(store: _store);
-  }
+  final LoginController _controller = Modular.get();
+  final LoginStore _store = Modular.get();
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +28,9 @@ class LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //TODO trocar a função pela classe stateless que vier da branch #5
             Padding(
               padding: const EdgeInsets.all(12),
-              child: customTextFormField(
+              child: CustomTextFormField(
                 controller: _controller.emailController,
                 label: "Email",
                 validator: checkEmail,
@@ -45,7 +38,7 @@ class LoginPageState extends State<LoginPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(12),
-              child: customTextFormField(
+              child: CustomTextFormField(
                 controller: _controller.passwordController,
                 label: "Senha",
                 validator: checkPassword,
@@ -71,6 +64,18 @@ class LoginPageState extends State<LoginPage> {
                     await _controller.callLoginWithEmailPassword(),
                 child: const Text('Entrar'),
               ),
+            ),
+            GestureDetector(
+              child: const Text("Esqueci minha senha"),
+              onTap: () {
+                Modular.to.navigate('/reset-password/');
+              },
+            ),
+            GestureDetector(
+              child: const Text("Quero me cadastrar"),
+              onTap: () {
+                Modular.to.navigate('/register/');
+              },
             ),
           ],
         ),

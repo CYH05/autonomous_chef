@@ -1,3 +1,4 @@
+import 'package:autonomous_chef/app/modules/login/domain/entities/login_email_password_entity.dart';
 import 'package:autonomous_chef/app/modules/login/external/service/login_email_password_serivce_interface.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
@@ -11,37 +12,25 @@ class LoginEmailPasswordServiceImpl implements ILoginEmailPasswordService {
       : _firebaseAuth = firebaseAuth;
 
   @override
-  Future<Unit> loginEmailPassword(Map<String, dynamic> map) async {
+  Future<Unit> loginEmailPassword(LoginEmailPasswordEntity entity) async {
     try {
       UserCredential credential =
           await _firebaseAuth.signInWithEmailAndPassword(
-        email: map['email'],
-        password: map['password'],
+        email: entity.email,
+        password: entity.password,
       );
 
       final user = credential.user;
     } on FirebaseAuthException catch (exception) {
-      final StackTrace st;
-      if (exception.stackTrace != null) {
-        st = exception.stackTrace!;
-      } else {
-        st = StackTrace.fromString("");
-      }
       if (exception.code == "user-disabled") {
-        throw UserDisabledException(
-          stackTrace: st,
-        );
+        throw UserDisabledException();
       }
 
       if (exception.code == "user-not-found") {
-        throw UserNotFoundException(
-          stackTrace: st,
-        );
+        throw UserNotFoundException();
       }
 
-      throw EmailOrPasswordInvalidException(
-        stackTrace: st,
-      );
+      throw EmailOrPasswordInvalidException();
     }
     return unit;
   }

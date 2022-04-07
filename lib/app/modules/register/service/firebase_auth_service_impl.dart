@@ -1,5 +1,5 @@
 import 'package:autonomous_chef/app/modules/register/domain/entity/register_email_password_entity.dart';
-import 'package:autonomous_chef/app/modules/register/external/services/firebase_auth_service_interface.dart';
+import 'package:autonomous_chef/app/modules/register/external/service/firebase_auth_service_interface.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -16,30 +16,24 @@ class FirebaseAuthServiceImpl implements IFirebaseAuthService {
     RegisterEmailPasswordEntity paramEntity,
   ) async {
     try {
-      _firebaseAuth.createUserWithEmailAndPassword(
+      final UserCredential credential =
+          await _firebaseAuth.createUserWithEmailAndPassword(
         email: paramEntity.email,
         password: paramEntity.password,
       );
+      final user = credential.user;
     } on FirebaseAuthException catch (exception) {
       if (exception.code == "email-already-in-use") {
-        throw EmailAlreadyInUseException(
-          stackTrace: exception.stackTrace!,
-        );
+        throw const EmailAlreadyInUseException();
       }
       if (exception.code == "invalid-email") {
-        throw InvalidEmailException(
-          stackTrace: exception.stackTrace!,
-        );
+        throw const InvalidEmailException();
       }
       if (exception.code == "operation-not-allowed") {
-        throw EmailOrPasswordEnabledException(
-          stackTrace: exception.stackTrace!,
-        );
+        throw const EmailOrPasswordEnabledException();
       }
       if (exception.code == "weak-password") {
-        throw WeekPasswordException(
-          stackTrace: exception.stackTrace!,
-        );
+        throw const WeekPasswordException();
       }
     }
     return unit;

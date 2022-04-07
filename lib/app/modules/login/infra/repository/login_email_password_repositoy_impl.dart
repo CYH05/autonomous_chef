@@ -16,8 +16,7 @@ class LoginEmailPasswordRepositoryImpl
   Future<Either<IAppException, LoginEmailPasswordEntity>>
       loginWithEmailPassword(LoginEmailPasswordEntity entity) async {
     try {
-      final map = LoginEmailPasswordEntityMapper.toMap(entity);
-      await _datasource.loginEmailPassword(map);
+      await _datasource.loginEmailPassword(entity);
       return Right(entity);
     } on EmailOrPasswordInvalidException catch (_, stackTrace) {
       return Left(EmailOrPasswordInvalidException(stackTrace: stackTrace));
@@ -26,6 +25,5 @@ class LoginEmailPasswordRepositoryImpl
     } on UserDisabledException catch (_, stackTrace) {
       return Left(UserDisabledException(stackTrace: stackTrace));
     }
-    //TODO Consultar as possiveis exceptions
   }
 }
