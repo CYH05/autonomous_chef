@@ -7,7 +7,8 @@ class EmailResetPasswordDatasourceImpl
     implements IEmailResetPasswordDatasource {
   final IEmailResetPasswordService _service;
 
-  const EmailResetPasswordDatasourceImpl({required service})
+  const EmailResetPasswordDatasourceImpl(
+      {required IEmailResetPasswordService service})
       : _service = service;
   @override
   Future<Unit> sendEmailResetPassword(EmailResetPasswordEntity entity) async {

@@ -2,6 +2,8 @@ import 'package:mocktail/mocktail.dart';
 
 import 'exception.dart';
 
+class ResetPasswordExceptionMock extends Mock implements ResetPasswordException{}
+
 class InvalidEmailExceptionMock extends Mock implements InvalidEmailException {}
 
 class MissingAndroidPackageNameExceptionMock extends Mock

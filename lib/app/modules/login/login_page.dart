@@ -65,6 +65,18 @@ class LoginPageState extends State<LoginPage> {
                 child: const Text('Entrar'),
               ),
             ),
+            GestureDetector(
+              child: const Text("Esqueci minha senha"),
+              onTap: () {
+                Modular.to.navigate('/reset-password/');
+              },
+            ),
+            GestureDetector(
+              child: const Text("Quero me cadastrar"),
+              onTap: () {
+                Modular.to.navigate('/register/');
+              },
+            ),
           ],
         ),
       ),

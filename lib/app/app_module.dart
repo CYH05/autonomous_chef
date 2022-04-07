@@ -1,5 +1,6 @@
 import 'package:autonomous_chef/app/global_store.dart';
 import 'package:autonomous_chef/app/modules/home/home_module.dart';
+import 'package:autonomous_chef/app/modules/reset-password/reset_password_module.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -15,8 +16,9 @@ class AppModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ModuleRoute("/login/", module: LoginModule()),
+    ModuleRoute(Modular.initialRoute, module: LoginModule()),
     ModuleRoute("/home/", module: HomeModule()),
-    ModuleRoute(Modular.initialRoute, module: RegisterModule()),
+    ModuleRoute("/register/", module: RegisterModule()),
+    ModuleRoute("/reset-password/", module: ResetPasswordModule()),
   ];
 }
